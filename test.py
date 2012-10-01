@@ -18,6 +18,7 @@ COMPILE_SCRIPT = './compile.sh %s'
 ALL_TESTS = False
 # Subset of tests
 TESTS = [
+	'blank',
 	'function',
 	'multiple_functions',
 	'parameters',
