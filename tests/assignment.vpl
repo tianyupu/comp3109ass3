@@ -1,0 +1,18 @@
+func test0(a)
+  a = 0;
+end
+
+func test1(a,b)
+  a = 0;
+  b = 1;
+end
+
+func test2(a,b)
+  a = b;
+end
+
+func test3(a,b)
+  a = b;
+  a = 1;
+  b = a;
+end
