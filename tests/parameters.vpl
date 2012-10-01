@@ -1,0 +1,8 @@
+func test0(a)
+end
+
+func test1(a,b)
+end
+
+func test2(a,b,c,d,e,f)
+end

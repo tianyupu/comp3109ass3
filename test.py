@@ -3,7 +3,14 @@
 import subprocess
 import sys, os
 
+# Configurations
 TEST_DIR = './tests'
+TEST_EXT = '.vpl'
+TESTS = [
+	'function',
+	'multiple_functions',
+	'parameters',
+]
 
 
 # Output to shell
@@ -30,7 +37,9 @@ def green(string):
 print blue('Testing VPL grammar')
 
 # Get a list of the test programs
-tests = [os.path.join(TEST_DIR, f) for f in os.listdir(TEST_DIR) if f[-4:]=='.vpl']
+#tests = [os.path.join(TEST_DIR, f) for f in os.listdir(TEST_DIR) if f[-4:]==TEST_EXT]
+tests = [os.path.join(TEST_DIR, f+TEST_EXT) for f in TESTS]
+
 # Compilation script
 script = './compile.sh %s'
 
@@ -42,6 +51,7 @@ for test in tests:
 	
 	result = os.popen("bash -c '%s'" % call).read()
 	
+	# Check results
 	if not result:
 		print green("passed")
 		passed += 1
@@ -50,6 +60,7 @@ for test in tests:
 		print red(result)
 print
 
+# Overall test results
 result = "  Passed %d of %d tests" % (passed, len(tests))
 if passed == len(tests):
 	print green(result)
