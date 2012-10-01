@@ -1,0 +1,30 @@
+func test0(a)
+  while a < 20 do
+    a = a + 1;
+  endwhile
+end
+
+func test1(a,b)
+  while a < 20 do
+    a = a + 1;
+    while b < 20 do
+      b = b + 1;
+    endwhile
+  endwhile
+end
+
+func test2(a,b)
+  while a < 20 do
+    while b < 20 do
+      b = b + 1;
+    endwhile;
+    a = a + 1;
+  endwhile
+end
+
+func test3(a,b) 
+  while a < 10 do
+    b = a;
+    a = a * 2;
+  endwhile
+end
