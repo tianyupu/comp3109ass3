@@ -14,16 +14,16 @@ m : function m
   | ; // epsilon
 
 // Functions
-function : 'func' IDENT parenth defin state 'end' ;
+function : 'func' IDENT param declare state 'end' ;
 
-// Lists
-parenth : '(' list ')' ;
+// Paramaters
+param : '(' list ')' ;
 list : IDENT
      | IDENT ',' list ;
 
-// Defintions
-defin : 'var' list ';'
-      | ; // epsilon
+// Declarations
+declare : 'var' list ';'
+        | ; // epsilon
 
 // Statements
 state : 'if' cond 'then' state 'else' state 'endif' 
