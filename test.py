@@ -26,6 +26,7 @@ TESTS = [
 	'assignment',
 	'numbers',
 	'operators',
+	'expressions',
 ]
 
 
