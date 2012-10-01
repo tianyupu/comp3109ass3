@@ -24,6 +24,7 @@ TESTS = [
 	'declarations',
 	'assignment',
 	'numbers',
+	'operators',
 ]
 
 
