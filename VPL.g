@@ -38,14 +38,15 @@ statement : ';' state
 // Expressions
 expr : 'min' '(' expr ','  expr ')' 
      | '(' expr ')'
-     | NUM expression
-     | IDENT expression;
+     | NUM op
+     | IDENT op;
 
-expression : '+' expr
-           | '-' expr
-           | '*' expr
-           | '/' expr
-           | ;
+// Operations
+op : '+' expr
+   | '-' expr
+   | '*' expr
+   | '/' expr
+   | ; // epsilon
 
 // Conditions
 cond : expr '<' NUM ;
