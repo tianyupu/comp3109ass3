@@ -4,12 +4,23 @@ import subprocess
 import sys, os
 
 # Configurations
+
+# The directory containing the test programs
 TEST_DIR = './tests'
+# The extension for the test programs
 TEST_EXT = '.vpl'
+
+# Set to true to true for all tests
+# Set to false for specified subset
+ALL_TESTS = False
+# Subset of tests
 TESTS = [
 	'function',
 	'multiple_functions',
 	'parameters',
+	'declarations',
+	'assignment',
+	'numbers',
 ]
 
 
@@ -37,8 +48,10 @@ def green(string):
 print blue('Testing VPL grammar')
 
 # Get a list of the test programs
-#tests = [os.path.join(TEST_DIR, f) for f in os.listdir(TEST_DIR) if f[-4:]==TEST_EXT]
-tests = [os.path.join(TEST_DIR, f+TEST_EXT) for f in TESTS]
+if ALL_TESTS:
+	tests = [os.path.join(TEST_DIR, f) for f in os.listdir(TEST_DIR) if f[-4:]==TEST_EXT]
+else:
+	tests = [os.path.join(TEST_DIR, f+TEST_EXT) for f in TESTS]
 
 # Compilation script
 script = './compile.sh %s'
