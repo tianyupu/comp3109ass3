@@ -8,10 +8,11 @@ options {
 /*
   Non-Terminals
 */
-start : m ;
 
-m : function m
-  | ; // epsilon
+start : main ;
+
+main : function main
+     | ; // epsilon
 
 // Functions
 function : 'func' IDENT param declare state 'end' ;
@@ -33,7 +34,6 @@ state : 'if' cond 'then' state 'else' state 'endif'
 
 statement : ';' state 
           | ; // epsilon
-      
 
 // Expressions
 expr : 'min' '(' expr ','  expr ')' 
@@ -50,9 +50,12 @@ expression : '+' expr
 // Conditions
 cond : expr '<' NUM ;
 
+
+
 /*
   Terminals
 */
+
 IDENT : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
 NUM : '0'..'9'+ ('.' '0'..'9'+)? ;
 WS  : (' '|'\r'|'\n')+ {$channel = HIDDEN;} ;
