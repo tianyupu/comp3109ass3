@@ -10,6 +10,9 @@ TEST_DIR = './tests'
 # The extension for the test programs
 TEST_EXT = '.vpl'
 
+# Compilation script
+COMPILE_SCRIPT = './compile.sh %s'
+
 # Set to true to true for all tests
 # Set to false for specified subset
 ALL_TESTS = False
@@ -53,24 +56,26 @@ if ALL_TESTS:
 else:
 	tests = [os.path.join(TEST_DIR, f+TEST_EXT) for f in TESTS]
 
-# Compilation script
-script = './compile.sh %s'
+# Get the width of the longest bash call
+width = len(COMPILE_SCRIPT) + max(map(len, tests))
 
 # Do tests
 passed = 0
 for test in tests:
-	call = script % test
-	print ('  $ %s' % call).ljust(50)
+	call = COMPILE_SCRIPT % test
+	print ('  $ %s' % call).ljust(width+10),
 	
-	result = os.popen("bash -c '%s'" % call).read()
+	# Run compilation and read for errors
+	stdin, stdout, stderr = os.popen3(call)
+	stderr = stderr.read()
 	
 	# Check results
-	if not result:
+	if not stderr:
 		print green("passed")
 		passed += 1
 	else:
 		print red("failed")
-		print red(result)
+		print red(stderr)
 print
 
 # Overall test results
