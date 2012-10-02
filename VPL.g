@@ -30,11 +30,14 @@ main :
 
 // Functions
 function : 
-  'func' IDENT param declare state 'end'
+  'func' IDENT param declare statements 'end'
   // Add the new function to the list of functions
   {
+    #// Get the function name, parameters and local variables
     func_name = $IDENT.getText()
     params = $param.params
+    vars = $declare.vars
+    #// Create the function object
     self.funcs[func_name] = self.VPL.function.Function(func_name, params)
     print self.funcs[func_name]
   }
@@ -58,22 +61,22 @@ list returns [idents] :
 ;
 
 // Declarations
-declare :
+declare returns [vars]:
   'var' list ';'
+  // The variables are the indentities in the list
+  { $vars = $list.idents }
   | // epsilon
 ;
 
 // Statements
-state :
-    'if' cond 'then' state 'else' state 'endif' statement
-  | 'while' cond 'do' state 'endwhile' statement
-  | IDENT '=' expr statement
-  | ';' state
-  | // epsilon
+statements :
+  state (';' state)*
 ;
 
-statement :
-  ';' state
+state :
+    'if' cond 'then' statements 'else' statements 'endif'
+  | 'while' cond 'do' statements 'endwhile'
+  | IDENT '=' expr
   | // epsilon
 ;
 
