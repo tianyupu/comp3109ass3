@@ -29,6 +29,7 @@ TESTS = [
 	'expressions',
 	'if_statements',
 	'while_loops',
+	'other',
 ]
 
 
