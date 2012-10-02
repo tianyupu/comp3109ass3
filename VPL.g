@@ -27,8 +27,8 @@ declare : 'var' list ';'
         | ; // epsilon
 
 // Statements
-state : 'if' cond 'then' state 'else' state 'endif' 
-      | 'while' cond 'do' state 'endwhile' 
+state : 'if' cond 'then' state 'else' state 'endif' statement
+      | 'while' cond 'do' state 'endwhile' statement 
       | IDENT '=' expr statement
       | ; // epsilon
 
@@ -36,8 +36,8 @@ statement : ';' state
           | ; // epsilon
 
 // Expressions
-expr : 'min' '(' expr ','  expr ')' 
-     | '(' expr ')'
+expr : 'min' '(' expr ','  expr ')' op
+     | '(' expr ')' op
      | NUM op
      | IDENT op;
 
