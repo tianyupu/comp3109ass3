@@ -28,11 +28,12 @@ declare : 'var' list ';'
 
 // Statements
 state : 'if' cond 'then' state 'else' state 'endif' statement
-      | 'while' cond 'do' state 'endwhile' statement 
+      | 'while' cond 'do' state 'endwhile' statement
       | IDENT '=' expr statement
+      | ';' state
       | ; // epsilon
 
-statement : ';' state 
+statement : ';' state
           | ; // epsilon
 
 // Expressions
