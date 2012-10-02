@@ -5,6 +5,11 @@ options {
   language=Python;
 }
 
+// header
+@init {
+  self.funcs = {}
+}
+
 /*
   Non-Terminals
 */
@@ -16,27 +21,15 @@ main : function main
 
 // Functions
 function 
-  @init {
-    print ".text"
-    print ".global name"
-    print ".type name, @function"
-    print ".p2align 4,,15"
-    
-    print "name:"
-    print "  # save current frame pointer on stack"
-    print "  pushq \%rbp"
-    print "  # set frame pointer"
-    print "  movq \%rsp, \%rbp"
-    print "  # save callee-save registers that are used on stack"
-    print "  pushq \%rbx"
-  }
-  @after {
-      print "# epilog of a function"
-      print "popq \%rbx # restore reg \%rbx"
-      print "leave # restore frame pointer"
-      print "ret # return"
-  }
-  : 'func' IDENT param declare state 'end' ;
+  : 'func' IDENT param declare state 'end'
+  // Importing VPL and making a list of functions
+  {
+    import VPL.function
+    func_name = $IDENT.getText()
+    self.funcs[func_name] = VPL.function.Function(func_name)
+    print self.funcs[func_name]
+  };
+
 
 // Paramaters
 param : '(' list ')' ;
@@ -72,8 +65,6 @@ op : '+' expr
 
 // Conditions
 cond : expr '<' NUM ;
-
-
 
 /*
   Terminals
