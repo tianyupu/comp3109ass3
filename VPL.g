@@ -1,77 +1,103 @@
 grammar VPL;
 
-// Compile to Python
+/*
+  Initialisation and Configuration
+*/
 options {
   language=Python;
 }
 
-// header
 @init {
+  import VPL
+  self.VPL = VPL
   self.funcs = {}
 }
+
 
 /*
   Non-Terminals
 */
 
-start : main ;
+// The main program
+start :
+  main
+;
 
-main : function main
-     | ; // epsilon
+main :
+  function main
+  | // epsilon
+;
 
 // Functions
-function 
-  : 'func' IDENT param declare state 'end'
-  // Importing VPL and making a list of functions
+function : 
+  'func' IDENT param declare state 'end'
+  // Add the new function to the list of functions
   {
-    import VPL.function
     func_name = $IDENT.getText()
     params = $param.params
-    self.funcs[func_name] = VPL.function.Function(func_name, params)
+    self.funcs[func_name] = self.VPL.function.Function(func_name, params)
     print self.funcs[func_name]
-  };
-
+  }
+;
 
 // Parameters
-param returns [params]
-     : '(' list ')' {$params = $list.params} ;
-list returns [params]
-  @init {$params = set()}
-     : id1=IDENT
-       { $params.add(id1.getText()) }
-     ( ',' id2=IDENT
-       { $params.add(id2.getText()) }
-     )*;
+param returns [params] :
+  '(' list ')'
+  // The parameters are the indentities in the list
+  { $params = $list.idents }
+;
+
+list returns [idents] :
+  {$idents = set()} // Keep a set of the identities in the list
+  id1=IDENT
+  { $idents.add(id1.getText()) } // Add the new identity
+  (
+    ',' id2=IDENT
+    { $idents.add(id2.getText()) } // Add the new identity
+  )*
+;
 
 // Declarations
-declare : 'var' list ';'
-        | ; // epsilon
+declare :
+  'var' list ';'
+  | // epsilon
+;
 
 // Statements
-state : 'if' cond 'then' state 'else' state 'endif' statement
-      | 'while' cond 'do' state 'endwhile' statement
-      | IDENT '=' expr statement
-      | ';' state
-      | ; // epsilon
+state :
+    'if' cond 'then' state 'else' state 'endif' statement
+  | 'while' cond 'do' state 'endwhile' statement
+  | IDENT '=' expr statement
+  | ';' state
+  | // epsilon
+;
 
-statement : ';' state
-          | ; // epsilon
+statement :
+  ';' state
+  | // epsilon
+;
 
 // Expressions
-expr : 'min' '(' expr ','  expr ')' op
-     | '(' expr ')' op
-     | NUM op
-     | IDENT op;
+expr :
+    'min' '(' expr ','  expr ')' op
+  | '(' expr ')' op
+  | NUM op
+  | IDENT op;
 
 // Operations
-op : '+' expr
-   | '-' expr
-   | '*' expr
-   | '/' expr
-   | ; // epsilon
+op :
+    '+' expr
+  | '-' expr
+  | '*' expr
+  | '/' expr
+  | // epsilon
+;
 
 // Conditions
-cond : expr '<' NUM ;
+cond :
+  expr '<' NUM
+;
+
 
 /*
   Terminals
