@@ -1,0 +1,38 @@
+func test0(a,b)
+  if a < 20 then
+    b = 10;
+  else
+    b = 20;
+  endif
+end
+
+func test1(a,b)
+  if a < 20 then
+    if a < 30 then
+      b = 20;
+    else
+      b = 30;
+    endif;
+    b = 10;
+  else
+    b = 20;
+    if a < 10 then
+      b = 1;
+    else
+      b = 2;
+    endif
+  endif
+end
+
+func test2(a,b,c)
+  if a < 20 then
+    b = 10;
+  else
+    b = 20;
+  endif;
+  if b < 20 then
+    a = 10;
+  else
+    a = 20;
+  endif
+end

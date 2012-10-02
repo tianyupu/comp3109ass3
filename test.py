@@ -27,6 +27,7 @@ TESTS = [
 	'numbers',
 	'operators',
 	'expressions',
+	'if_statements',
 	'while_loops',
 ]
 
