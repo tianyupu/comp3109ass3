@@ -1,5 +1,8 @@
 class Function():
-  def __init__(self, name):
+  def __init__(self, name, params):
+    self.name = name
+    self.params = params
+
     self.before = """
     .text
     .global %(name)s
@@ -21,10 +24,10 @@ class Function():
     addq $16, %%rax
     # NUM is the number of local variables
     # Needs to be computed by an attribute in the attribute grammar
-    imulq $NUM, %%rax, %%rax
+    imulq $%(num)s, %%rax, %%rax
     subq %%rax, %%rsp
     andq $-16, %%rsp
-    """ % {'name': name}   
+    """ % {'name': name, 'num': len(self.params)}   
     
     self.after = """
     # epilog of a function

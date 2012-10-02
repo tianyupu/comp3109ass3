@@ -26,15 +26,22 @@ function
   {
     import VPL.function
     func_name = $IDENT.getText()
-    self.funcs[func_name] = VPL.function.Function(func_name)
+    params = $param.params
+    self.funcs[func_name] = VPL.function.Function(func_name, params)
     print self.funcs[func_name]
   };
 
 
-// Paramaters
-param : '(' list ')' ;
-list : IDENT
-     | IDENT ',' list ;
+// Parameters
+param returns [params]
+     : '(' list ')' {$params = $list.params} ;
+list returns [params]
+  @init {$params = set()}
+     : id1=IDENT
+       { $params.add(id1.getText()) }
+     ( ',' id2=IDENT
+       { $params.add(id2.getText()) }
+     )*;
 
 // Declarations
 declare : 'var' list ';'
