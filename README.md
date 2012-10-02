@@ -5,6 +5,12 @@
 * [ANTLR cheat sheet](http://www.antlr.org/wiki/display/ANTLR3/ANTLR+Cheat+Sheet)
 * [ANTLR python target](http://www.antlr.org/wiki/display/ANTLR3/Antlr3PythonTarget)
 
+### Syntax Highlighting
+For better syntax highlighting run the following command
+```curl https://raw.github.com/rollxx/vim-antlr/master/syntax/antlr3.vim > ~/.vim/syntax/antlr3.vim```
+
+Then append `au BufRead,BufNewFile *.g set syntax=antlr3` to `~/.vim/filetypes.vim`
+
 ## Tests
 To perform the tests simply run `test.py` from the main folder.
 ```
