@@ -4,6 +4,7 @@
 ## Resources
 * [ANTLR cheat sheet](http://www.antlr.org/wiki/display/ANTLR3/ANTLR+Cheat+Sheet)
 * [ANTLR python target](http://www.antlr.org/wiki/display/ANTLR3/Antlr3PythonTarget)
+* [ANTLR tutorial](http://supportweb.cs.bham.ac.uk/docs/tutorials/docsystem/build/tutorials/antlr/antlr.html)
 
 ### Syntax Highlighting
 For better syntax highlighting run the following command
