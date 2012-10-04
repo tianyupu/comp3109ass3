@@ -15,7 +15,7 @@ Then append `au BufRead,BufNewFile *.g set syntax=antlr3` to `~/.vim/filetypes.v
 
 ## Compiling
 To compile use `compile.py` and the name of the file. The program will be converted to ASM and then compiled by gcc.
-```
+```shell
   $ ./compile.py prog.vpl
   $ cat prog.vpl.s
   ...
@@ -30,7 +30,7 @@ To compile use `compile.py` and the name of the file. The program will be conver
 
 ## Tests
 To perform the tests simply run `test.py` from the main folder.
-```
+```shell
   $ pwd
   .../comp3109ass3
   $ ./test.py
