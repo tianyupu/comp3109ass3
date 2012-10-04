@@ -12,6 +12,22 @@ For better syntax highlighting run the following command
 
 Then append `au BufRead,BufNewFile *.g set syntax=antlr3` to `~/.vim/filetypes.vim`
 
+
+## Compiling
+To compile use `compile.py` and the name of the file. The program will be converted to ASM and then compiled by gcc.
+```
+  $ ./compile.py prog.vpl
+  $ cat prog.vpl.s
+  ...
+  $ ./prog.vpl
+  ...
+```
+### Options
+ * `--ANTLR=(y|n)`
+  * If set to 'n' the ANTLR grammar will not be built. An already existing version will be used.
+  * If set to 'y' the ANTLR grammar will be built. Even if no .vpl file is given.
+
+
 ## Tests
 To perform the tests simply run `test.py` from the main folder.
 ```
