@@ -1,7 +1,13 @@
+from constant import *
+
 class Function():
-  def __init__(self, name, params):
+  def __init__(self, name, params, localvars):
     self.name = name
-    self.params = params
+
+    # Dictionaries for variables, parameters and constants
+    self.params = params if params else {}
+    self.localvars = localvars if localvars else {}
+    self.consts = {}
 
     self.before = """
     .text
@@ -27,7 +33,7 @@ class Function():
     imulq $%(num)s, %%rax, %%rax
     subq %%rax, %%rsp
     andq $-16, %%rsp
-    """ % {'name': name, 'num': len(self.params)}   
+    """    
     
     self.after = """
     # epilog of a function
@@ -38,6 +44,19 @@ class Function():
     # TO DO
     self.body = """
     """
+  def getVar(self, ident):
+    if ident in self.params:
+      return self.params[ident]
+    elif ident in self.localvars:
+      return self.localvars[ident]
+
+  def getConst(self, n):
+    if n not in self.consts:
+      self.consts[n] = Constant(float(n))
+    return self.consts[n]
 
   def __str__(self):
-    return self.before + self.body + self.after
+    return self.before % {'name': self.name, 'num': len(self.localvars)} \
+        + self.body \
+        + '\n'.join(map(str, self.consts.values())) \
+        + self.after
