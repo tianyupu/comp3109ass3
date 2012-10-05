@@ -10,7 +10,7 @@ TEST_DIR = './tests'
 # The extension for the test programs
 PROG_EXT = '.vpl'
 # The extension for checking the output of compile programs
-TEST_EXT = '.out'
+TEST_EXT = '.ans'
 
 # Compilation script
 COMPILE_SCRIPT = './compile.py %(test)s'+PROG_EXT+' --ANTLR=n'
