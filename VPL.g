@@ -29,8 +29,8 @@ main :
 ;
 
 // Functions
-function : 
-  'func' IDENT param declare statements 'end'
+function returns [func] : 
+  'func' IDENT param declare statements[func] 'end'
   // Add the new function to the list of functions
   {
     #// Get the function name, parameters and local variables
@@ -38,8 +38,10 @@ function :
     params = $param.params
     vars = $declare.vars
     #// Create the function object
-    self.funcs[func_name] = self.VPL.function.Function(func_name, params)
-    print self.funcs[func_name]
+    self.funcs[func_name] = self.VPL.function.Function(func_name, vars)
+    self.funcs[func_name].vars = params
+    $func = self.func[func_name]
+    print $func
   }
 ;
 
@@ -47,11 +49,13 @@ function :
 param returns [params] :
   '(' list ')'
   // The parameters are the indentities in the list
-  { $params = $list.idents }
+  {
+    $params = {ident:self.VPL.variable.VecParam() for ident in $list.idents}
+  }
 ;
 
 list returns [idents] :
-  {$idents = set()} // Keep a set of the identities in the list
+  { $idents = set() } // Keep a set of the identities in the list
   id1=IDENT
   { $idents.add(id1.getText()) } // Add the new identity
   (
@@ -61,7 +65,7 @@ list returns [idents] :
 ;
 
 // Declarations
-declare returns [vars]:
+declare returns [vars] :
   'var' list ';'
   // The variables are the indentities in the list
   { $vars = $list.idents }
@@ -69,22 +73,29 @@ declare returns [vars]:
 ;
 
 // Statements
-statements :
-  state (';' state)*
+statements [func] :
+  state[func] (';' state[func])*
 ;
 
-state :
+state [func] :
     'if' cond 'then' statements 'else' statements 'endif'
   | 'while' cond 'do' statements 'endwhile'
-  | IDENT '=' expr
+  | IDENT '=' expr 
+  {
+    v = $func.vars[$IDENT.getText()]
+    print v.assign($expr.factor, 0)
+  }
   | // epsilon
 ;
 
 // Expressions
-expr :
+expr returns [factor] :
     'min' '(' expr ','  expr ')' op
   | '(' expr ')' op
   | NUM op
+  {
+    $factor = $NUM.const
+  }
   | IDENT op;
 
 // Operations
@@ -107,5 +118,11 @@ cond :
 */
 
 IDENT : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
-NUM : '0'..'9'+ ('.' '0'..'9'+)? ;
+NUM returns [const] : 
+  '0'..'9'+ ('.' '0'..'9'+)?
+  {
+    n = $NUM.getText()
+    $const = self.VPL.constant.Constant(int(n))
+  }
+;
 WS  : (' '|'\r'|'\n')+ {$channel = HIDDEN;} ;
