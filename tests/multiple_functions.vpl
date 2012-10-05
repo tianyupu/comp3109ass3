@@ -1,5 +1,5 @@
-func test1(a)
+func test0(a)
 end
 
-func test2(a)
+func test1(a)
 end
