@@ -29,20 +29,24 @@ main :
 ;
 
 // Functions
-function returns [func] : 
-  'func' IDENT param declare statements[func] 'end'
+function : 
+  'func' IDENT
+  {
+    #// Create the function object
+    func_name = $IDENT.getText()
+    self.funcs[func_name] = self.VPL.function.Function(func_name, [])
+    func = self.funcs[func_name]
+  }
+  param declare
   // Add the new function to the list of functions
   {
     #// Get the function name, parameters and local variables
-    func_name = $IDENT.getText()
     params = $param.params
-    vars = $declare.vars
-    #// Create the function object
-    self.funcs[func_name] = self.VPL.function.Function(func_name, vars)
     self.funcs[func_name].vars = params
-    $func = self.func[func_name]
-    print $func
+    vars = $declare.vars
+    print func
   }
+  statements[func] 'end'
 ;
 
 // Parameters
@@ -78,8 +82,8 @@ statements [func] :
 ;
 
 state [func] :
-    'if' cond 'then' statements 'else' statements 'endif'
-  | 'while' cond 'do' statements 'endwhile'
+    'if' cond 'then' statements[func] 'else' statements[func] 'endif'
+  | 'while' cond 'do' statements[func] 'endwhile'
   | IDENT '=' expr 
   {
     v = $func.vars[$IDENT.getText()]
@@ -94,7 +98,8 @@ expr returns [factor] :
   | '(' expr ')' op
   | NUM op
   {
-    $factor = $NUM.const
+    n = $NUM.getText()
+    $factor = self.VPL.constant.Constant(int(n))
   }
   | IDENT op;
 
@@ -118,11 +123,5 @@ cond :
 */
 
 IDENT : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')* ;
-NUM returns [const] : 
-  '0'..'9'+ ('.' '0'..'9'+)?
-  {
-    n = $NUM.getText()
-    $const = self.VPL.constant.Constant(int(n))
-  }
-;
+NUM : '0'..'9'+ ('.' '0'..'9'+)? ;
 WS  : (' '|'\r'|'\n')+ {$channel = HIDDEN;} ;
