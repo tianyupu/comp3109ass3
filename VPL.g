@@ -30,23 +30,22 @@ main :
 
 // Functions
 function : 
-  'func' IDENT
+  'func' IDENT param declare
   {
-    #// Create the function object
+    # Get the parameters and local variables
+    params = $param.params
+    vars = $declare.vars
+    
+    # Create the function object
     func_name = $IDENT.getText()
-    self.funcs[func_name] = self.VPL.function.Function(func_name, [])
+    self.funcs[func_name] = self.VPL.function.Function(func_name, params, vars)
     func = self.funcs[func_name]
   }
-  param declare
-  // Add the new function to the list of functions
+  statements[func] 'end'
   {
-    #// Get the function name, parameters and local variables
-    params = $param.params
-    self.funcs[func_name].vars = params
-    vars = $declare.vars
+    # Output the function code
     print func
   }
-  statements[func] 'end'
 ;
 
 // Parameters
@@ -54,6 +53,7 @@ param returns [params] :
   '(' list ')'
   // The parameters are the indentities in the list
   {
+    # Dictionary mapping identities to parameters
     $params = {ident:self.VPL.variable.VecParam() for ident in $list.idents}
   }
 ;
@@ -72,7 +72,10 @@ list returns [idents] :
 declare returns [vars] :
   'var' list ';'
   // The variables are the indentities in the list
-  { $vars = $list.idents }
+  { 
+    # Dictionary mapping identities to local variables
+    $vars = {var: self.VPL.variable.LocalVar() for var in $list.idents}
+  }
   | // epsilon
 ;
 
@@ -82,39 +85,53 @@ statements [func] :
 ;
 
 state [func] :
-    'if' cond 'then' statements[func] 'else' statements[func] 'endif'
-  | 'while' cond 'do' statements[func] 'endwhile'
-  | IDENT '=' expr 
+    'if' cond[func] 'then' statements[func] 'else' statements[func] 'endif'
+  | 'while' cond[func] 'do' statements[func] 'endwhile'
+  | IDENT '=' factor[func] 
   {
-    v = $func.vars[$IDENT.getText()]
-    print v.assign($expr.factor, 0)
+    # Add assignment to the function
+    v = $func.getVar($IDENT.getText())
+    $func.body += v.assign($factor.var, 0)
   }
   | // epsilon
 ;
 
 // Expressions
-expr returns [factor] :
-    'min' '(' expr ','  expr ')' op
-  | '(' expr ')' op
-  | NUM op
+factor [func] returns [var]:
+  left=expr[func] (op right=expr[func])*
   {
-    n = $NUM.getText()
-    $factor = self.VPL.constant.Constant(int(n))
+    # Calculate the factor (TODO)
+    $factor.var = left
   }
-  | IDENT op;
+;
+
+expr [func] returns [var] :
+  | 'min' '(' expr[func] ','  expr[func] ')'
+  | '(' expr[func] ')'
+  | NUM
+  {
+    # Get the constant
+    n = $NUM.getText()
+    $var = $func.getConst(n)
+  }
+  | IDENT
+  {
+    # Retrieve the variable from the function
+    $var = func.getVar($IDENT.getText())
+  }
+;
 
 // Operations
 op :
-    '+' expr
-  | '-' expr
-  | '*' expr
-  | '/' expr
-  | // epsilon
+    '+'
+  | '-'
+  | '*'
+  | '/'
 ;
 
 // Conditions
-cond :
-  expr '<' NUM
+cond [func] :
+  expr[func] '<' NUM
 ;
 
 
