@@ -12,7 +12,7 @@ class Variable():
       jz .loop_end%(num)s
     .loop_begin%(num)s:
       movaps (%%rax), %%xmm0
-      movaps %%mm0, (%%r10)
+      movaps %%xmm0, (%%r10)
       # IMPORTANT: remove the following line only if %%rax is
       # pointing to a constant
       addq $16, %%rax
