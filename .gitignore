@@ -10,5 +10,8 @@ build/*
 
 # Ignore files with no extension
 # (Not a foolproof solution)
-*
-!*.*
+#*
+#!*.*
+tests/*
+!tests/*.*
+tests/*.s
