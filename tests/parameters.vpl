@@ -4,5 +4,5 @@ end
 func test1(a,b)
 end
 
-func test2(a,b,c,d,e,f)
+func test2(a,b,c,d)
 end
