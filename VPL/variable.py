@@ -2,7 +2,7 @@ class Variable():
   def __init__(self):
     pass
 
-  def assign(self, src, num):
+  def assign(self, src, loopnum):
     s = """
       %(src)s
       %(dest)s
@@ -20,7 +20,8 @@ class Variable():
       decq %%rbx
       jnz .loop_begin%(num)s
     .loop_end%(num)s:
-    """ % {'src': src.load('%rax'), 'dest': self.load('%r10'), 'num': num}
+    """ % {'src': src.load('%rax'), 'dest': self.load('%r10'), 'num': loopnum}
+    
     return s
 
 class LocalVar(Variable):

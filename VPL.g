@@ -10,6 +10,7 @@ options {
 @init {
   import VPL
   self.VPL = VPL
+  self.next_loop = 0
   self.funcs = {}
 }
 
@@ -94,8 +95,9 @@ state [func] :
   | IDENT '=' factor[func] 
   {
     # Add assignment to the function
-    v = $func.getVar($IDENT.getText())
-    $func.body += v.assign($factor.var, 0)
+    var = $func.getVar($IDENT.getText())
+    $func.body += var.assign($factor.var, self.next_loop)
+    self.next_loop += 1
   }
   | // epsilon
 ;
