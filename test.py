@@ -41,7 +41,6 @@ TESTS = [
 # Output to shell
 class echo():
 	def write(self, string):
-		#string = string.replace("'", "\\'")
 		subprocess.call("echo -ne %s" % quote(string), shell=True)
 
 sys.stdout = echo()

@@ -32,6 +32,10 @@ main :
 function : 
   'func' IDENT param declare
   {
+    # Reset counters
+    self.VPL.variable.VecParam.nextreg = 0
+    self.VPL.variable.LocalVar.nextvar = 0
+
     # Get the parameters and local variables
     params = $param.params
     vars = $declare.vars
