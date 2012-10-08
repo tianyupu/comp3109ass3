@@ -62,7 +62,7 @@ def run_tests(command, tests, name="Test"):
   print blue('\t'+name)
   
   # Get the width of the longest command
-  width = len(command) + max(map(len, tests))
+  width = len(command) + command.count('%(test)s')*max(map(len, tests))
   
   # Do the tests
   passed = 0
