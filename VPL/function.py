@@ -50,11 +50,6 @@ class Function():
     elif ident in self.localvars:
       return self.localvars[ident]
 
-  def getConst(self, n):
-    if n not in self.consts:
-      self.consts[n] = Constant(float(n))
-    return self.consts[n]
-
   def __str__(self):
     return self.before % {'name': self.name, 'num': len(self.localvars)} \
         + self.body \

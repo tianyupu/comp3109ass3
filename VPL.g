@@ -12,6 +12,7 @@ options {
   self.VPL = VPL
   self.next_loop = 0
   self.funcs = {}
+  self.consts = {}
 }
 
 
@@ -27,6 +28,11 @@ start :
 main :
   function main
   | // epsilon
+  {
+    # Output oonstants code
+    for c in self.consts.values():
+      print c
+  }
 ;
 
 // Functions
@@ -117,8 +123,8 @@ expr [func] returns [var] :
   | NUM
   {
     # Get the constant
-    n = $NUM.getText()
-    $var = $func.getConst(n)
+    n = float($NUM.getText())
+    $var = self.consts.setdefault(n, self.VPL.constant.Constant(n))
   }
   | IDENT
   {
