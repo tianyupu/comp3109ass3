@@ -1,45 +1,32 @@
-#include <stdlib.h>
-#include <stdio.h>
-// alignment macro: aligns a memory block a to multiples of a
-#define align(s,a) (((size_t)(s) + ((a)-1)) & ~ ((size_t) (a) - 1))
-// alignment for SSE unit
-#define SSE_ALIGN (16)
-// number of elements
-#define NUM (100)
+#include "head.h"
 
 extern void test0(long, float *);
-extern void test1(long, float *);
-extern void test2(long, float *);
+extern void test1(long, float *, float *);
+extern void test2(long, float *, float *, float *, float *);
 
 int main(void) {
-  float *a = malloc(sizeof(float)*NUM  + SSE_ALIGN),
-        *b = malloc(sizeof(float)*NUM  + SSE_ALIGN),
-        *c = malloc(sizeof(float)*NUM  + SSE_ALIGN),
-        *d = malloc(sizeof(float)*NUM  + SSE_ALIGN);
+  // Create vectors
+  float *a = createvect(NUM),
+        *b = createvect(NUM),
+        *c = createvect(NUM),
+        *d = createvect(NUM);
 
-  // make sure that pointers are aligned to multiples of 16 bytes
-  a = (float *) align(a, SSE_ALIGN);
-  b = (float *) align(b, SSE_ALIGN);
-  c = (float *) align(c, SSE_ALIGN);
-  d = (float *) align(d, SSE_ALIGN);
+  // Assign dummy values
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 2);
+  setvect(NUM, c, 3);
+  setvect(NUM, d, 4);
 
-  // write values to a and b
-  // and invoke the function written in the vector language
-  // and read values from c
-  
   // test 0
-  *a = 1, *b = 2, *c = 3, *d = 4;
   test0(NUM, a);
-  printf("0: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
+  printf("0: a = %f\n", *a);
   
   // test 1
-  *a = 1, *b = 2, *c = 3, *d = 4;
-  test1(NUM, a);
-  printf("1: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
+  test1(NUM, a, b);
+  printf("1: a = %f, b = %f\n", *a, *b);
   
   // test 2
-  *a = 1, *b = 2, *c = 3, *d = 4;
-  test1(NUM, a);
+  test2(NUM, a, b, c, d);
   printf("2: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
   
   return 0;
