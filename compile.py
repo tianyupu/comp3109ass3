@@ -25,8 +25,8 @@ if prog:
   # Compile the ASM and C file together
   if os.path.isfile(prog+'.c'):
     # Use prog.c
-    os.system("gcc -Wall -W %(prog)s.c %(prog)s.vpl.s -o %(prog)s" % {'prog': prog})
+    os.system("gcc -Wall -W -I vector %(prog)s.c %(prog)s.vpl.s vector/vector.c -o %(prog)s" % {'prog': prog})
   else:
     # Use main.c
-    os.system("gcc -Wall -W main.c %(prog)s.vpl.s -o %(prog)s" % {'prog': prog})
+    os.system("gcc -Wall -W -I vector main.c %(prog)s.vpl.s vector/vector.c -o %(prog)s" % {'prog': prog})
 
