@@ -10,9 +10,7 @@ options {
 @init {
   import VPL
   self.VPL = VPL
-  self.next_loop = 0
-  self.funcs = {}
-  self.consts = {}
+  self.prog = self.VPL.program.Program()
 }
 
 
@@ -29,9 +27,7 @@ main :
   function main
   | // epsilon
   {
-    # Output oonstants code
-    for c in self.consts.values():
-      print c
+    print self.prog
   }
 ;
 
@@ -42,20 +38,19 @@ function :
     # Reset counters
     self.VPL.variable.VecParam.nextreg = 0
     self.VPL.variable.LocalVar.nextvar = 0
-
+    
     # Get the parameters and local variables
     params = $param.params
     vars = $declare.vars
     
     # Create the function object
     func_name = $IDENT.getText()
-    self.funcs[func_name] = self.VPL.function.Function(func_name, params, vars)
-    func = self.funcs[func_name]
+    func = self.prog.addFunc(func_name, params, vars)
   }
   statements[func] 'end'
   {
     # Output the function code
-    print func
+    #print func
   }
 ;
 
@@ -102,8 +97,8 @@ state [func] :
   {
     # Add assignment to the function
     var = $func.getVar($IDENT.getText())
-    $func.body += var.assign($factor.var, self.next_loop)
-    self.next_loop += 1
+    $func.body += var.assign($factor.var, self.prog.next_loop)
+    self.prog.next_loop += 1
   }
   | // epsilon
 ;
@@ -124,7 +119,7 @@ expr [func] returns [var] :
   {
     # Get the constant
     n = float($NUM.getText())
-    $var = self.consts.setdefault(n, self.VPL.constant.Constant(n))
+    $var = self.prog.addConst(n)
   }
   | IDENT
   {

@@ -1,4 +1,5 @@
-from constant import *
+from constant import Constant
+from variable import *
 
 class Function():
   def __init__(self, name, params, localvars):
