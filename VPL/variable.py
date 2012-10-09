@@ -12,15 +12,21 @@ class Variable():
       jz .loop_end%(num)s
     .loop_begin%(num)s:
       movaps (%%rax), %%xmm0
-      movaps %%xmm0, (%%r10)
-      # IMPORTANT: remove the following line only if %%rax is
-      # pointing to a constant
-      addq $16, %%rax
+      movaps %%xmm0, (%%r10)"""
+    
+    if src.__class__.__name__ != 'Constant':
+      s += """# IMPORTANT: remove the following line only if %%rax is
+       # pointing to a constant
+       addq $16, %%rax"""
+    
+    s += """
       addq $16, %%r10
       decq %%rbx
       jnz .loop_begin%(num)s
     .loop_end%(num)s:
-    """ % {'src': src.load('%rax'), 'dest': self.load('%r10'), 'num': loopnum}
+    """
+
+    s = s % {'src': src.load('%rax'), 'dest': self.load('%r10'), 'num': loopnum}
     
     return s
 
