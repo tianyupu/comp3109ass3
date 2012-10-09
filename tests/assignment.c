@@ -25,11 +25,11 @@ int main(void) {
   // and read values from c
   
   // test 0
-  //*a = 1; *b = 2;
+  *a = 1; *b = 2;
   test0(NUM, a);
   printf("0: a = %f, b = %f \n", *a, *b);
   
-  /*
+  
   // test 1
   *a = 1; *b = 2;
   test1(NUM, a, b);
@@ -44,7 +44,6 @@ int main(void) {
   *a = 1; *b = 2;
   test3(NUM, a, b);
   printf("3: a = %f, b = %f \n", *a, *b);
-  */
 
   return 0;
 }
