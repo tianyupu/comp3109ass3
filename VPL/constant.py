@@ -1,18 +1,16 @@
 class Constant():
   def __init__(self, val):
     self.val = val
-
-    # Remove characters for the label
-    self.label = str(val).replace('+', '').replace('-', '_')
+    self.label = repr(val)
 
     self.postamble = """
     .data
     .align 16
     .const%(label)s:
-        .float %(val)s
-        .float %(val)s
-        .float %(val)s
-        .float %(val)s
+        .float %(val)r
+        .float %(val)r
+        .float %(val)r
+        .float %(val)r
     """ % {'label': self.label, 'val': self.val}
 
   def load(self, destreg):
