@@ -24,13 +24,13 @@ int main(void) {
   *a = 1;
   test0(NUM, a);
   // TO FIX
-  printf("0: %f", *a);
+  printf("0: %f\n", *a);
   
   // test 1
   *a = 1;
   test1(NUM, a);
   // TO FIX
-  printf("1: %f", *a);
+  printf("1: %f\n", *a);
   
   return 0;
 }

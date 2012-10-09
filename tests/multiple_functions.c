@@ -23,12 +23,12 @@ int main(void) {
   // test 0
   *a = 1;
   test0(NUM, a);
-  printf("0: a = %f", *a);
+  printf("0: a = %f\n", *a);
   
   // test 1
   *a = 1;
   test1(NUM, a);
-  printf("1: a = %f", *a);
+  printf("1: a = %f\n", *a);
   
   return 0;
 }
