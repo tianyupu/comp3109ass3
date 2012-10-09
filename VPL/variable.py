@@ -6,7 +6,7 @@ class Variable():
     s = """
       %(src)s
       %(dest)s
-      movq %%rdi, %%rbx
+
       movq %%rdi, %%rbx
       shrq $2, %%rbx
       jz .loop_end%(num)s
