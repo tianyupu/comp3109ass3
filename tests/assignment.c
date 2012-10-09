@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 // alignment macro: aligns a memory block a to multiples of a
-#define align(s,a) (((size_t)(s) + ((a)-1)) & - ((size_t) (a) - 1))
+#define align(s,a) (((size_t)(s) + ((a)-1)) & ~ ((size_t) (a) - 1))
 // alignment for SSE unit
 #define SSE_ALIGN (16)
 // number of elements
-#define NUM (100)
+#define NUM (4)
 
 extern void test0(long, float *);
 extern void test1(long, float *, float *);
@@ -25,10 +25,11 @@ int main(void) {
   // and read values from c
   
   // test 0
-  *a = 1; *b = 2;
+  //*a = 1; *b = 2;
   test0(NUM, a);
   printf("0: a = %f, b = %f \n", *a, *b);
   
+  /*
   // test 1
   *a = 1; *b = 2;
   test1(NUM, a, b);
@@ -43,6 +44,7 @@ int main(void) {
   *a = 1; *b = 2;
   test3(NUM, a, b);
   printf("3: a = %f, b = %f \n", *a, *b);
+  */
 
   return 0;
 }

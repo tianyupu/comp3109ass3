@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 // alignment macro: aligns a memory block a to multiples of a
-#define align(s,a) (((size_t)(s) + ((a)-1)) & - ((size_t) (a) - 1))
+#define align(s,a) (((size_t)(s) + ((a)-1)) & ~ ((size_t) (a) - 1))
 // alignment for SSE unit
 #define SSE_ALIGN (16)
 // number of elements
@@ -30,17 +30,17 @@ int main(void) {
   // test 0
   *a = 1, *b = 2, *c = 3, *d = 4;
   test0(NUM, a);
-  printf("0: a = %f, b = %f, c = %f, d = %f", *a, *b, *c, *d);
+  printf("0: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
   
   // test 1
   *a = 1, *b = 2, *c = 3, *d = 4;
   test1(NUM, a);
-  printf("1: a = %f, b = %f, c = %f, d = %f", *a, *b, *c, *d);
+  printf("1: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
   
   // test 2
   *a = 1, *b = 2, *c = 3, *d = 4;
   test1(NUM, a);
-  printf("2: a = %f, b = %f, c = %f, d = %f", *a, *b, *c, *d);
+  printf("2: a = %f, b = %f, c = %f, d = %f\n", *a, *b, *c, *d);
   
   return 0;
 }
