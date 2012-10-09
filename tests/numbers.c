@@ -46,8 +46,8 @@ int main(void) {
   
   // test 4
   *a = 1;
-  test3(NUM, a, b);
-  printf("3: a = %f \n", *a);
+  test4(NUM, a, b);
+  printf("4: a = %f \n", *a);
 
   return 0;
 }
