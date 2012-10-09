@@ -6,37 +6,33 @@ extern void test2(long, float *, float *);
 extern void test3(long, float *, float *);
 
 int main(void) {
-  float *a = malloc(sizeof(float)*NUM  + SSE_ALIGN),
-        *b = malloc(sizeof(float)*NUM  + SSE_ALIGN);
+  float *a = createvect(NUM),
+        *b = createvect(NUM);
 
-  // make sure that pointers are aligned to multiples of 16 bytes
-  a = (float *) align(a, SSE_ALIGN);
-  b = (float *) align(b, SSE_ALIGN);
+  // setting the vectors
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 2);
 
-  // write values to a and b
-  // and invoke the function written in the vector language
-  // and read values from c
-  
   // test 0
-  *a = 1; *b = 2;
   test0(NUM, a);
-  printf("0: a = %f, b = %f \n", *a, *b);
-  
+  printf("0: a = %f\n", *a);
   
   // test 1
-  *a = 1; *b = 2;
+  setvect(NUM, a, 1);
   test1(NUM, a, b);
-  printf("1: a = %f, b = %f \n", *a, *b);
+  printf("1: a = %f, b = %f\n", *a, *b);
   
   // test 2
-  *a = 1; *b = 2;
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 2);
   test2(NUM, a, b);
-  printf("2: a = %f, b = %f \n", *a, *b);
+  printf("2: a = %f, b = %f\n", *a, *b);
   
   // test 3
-  *a = 1; *b = 2;
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 2);
   test3(NUM, a, b);
-  printf("3: a = %f, b = %f \n", *a, *b);
+  printf("3: a = %f, b = %f\n", *a, *b);
 
   return 0;
 }

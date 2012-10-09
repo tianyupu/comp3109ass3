@@ -5,31 +5,24 @@ extern void test1(long, float *, float *);
 extern void test2(long, float *);
 
 int main(void) {
-  float *a = malloc(sizeof(float)*NUM  + SSE_ALIGN),
-        *b = malloc(sizeof(float)*NUM  + SSE_ALIGN);
+  float *a = createvect(NUM),
+        *b = createvect(NUM);
 
-  // make sure that pointers are aligned to multiples of 16 bytes
-  a = (float *) align(a, SSE_ALIGN);
-  b = (float *) align(b, SSE_ALIGN);
-
-  // write values to a and b
-  // and invoke the function written in the vector language
-  // and read values from c
-  
   // test 0
-  *a = 1; *b = 2;
   test0(NUM, a);
-  printf("0: a = %f, b = %f \n", *a, *b);
+  setvect(NUM, a, 1);
+  printf("0: a = %f\n", *a);
   
   // test 1
-  *a = 1; *b = 2;
   test1(NUM, a, b);
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 0);
   printf("1: a = %f, b = %f \n", *a, *b);
   
   // test 2
-  *a = 1; *b = 2;
   test2(NUM, a);
-  printf("2: a = %f, b = %f \n", *a, *b);
+  setvect(NUM, a, 1);
+  printf("2: a = %f\n", *a);
   
   return 0;
 }
