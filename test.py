@@ -16,7 +16,7 @@ TEST_EXT = '.ans'
 # Compilation script
 COMPILE_SCRIPT = './compile.py %(test)s'+PROG_EXT+' --ANTLR=n'
 # Script for checking output of compiled program
-OUTPUT_TEST_SCRIPT = 'diff %(test)s %(test)s'+TEST_EXT
+OUTPUT_TEST_SCRIPT = '%(test)s | diff - %(test)s'+TEST_EXT
 
 # Set to true to true for all tests
 # Set to false for specified subset
@@ -57,7 +57,7 @@ def green(string):
 	return "\e[1;32m"+string+"\e[0m"
 
 # Test function
-def run_tests(command, tests, name="Test"):
+def run_tests(command, tests, mode="stderr", name="Test"):
   # Print the name of the tests
   print blue('\t'+name)
   
@@ -73,14 +73,19 @@ def run_tests(command, tests, name="Test"):
     # Run compilation and read for errors
     stdin, stdout, stderr = os.popen3(call)
     stderr = stderr.read()
+    stdout = stdout.read()
     
     # Check results
-    if not stderr:
+    if ("stderr" in mode and stderr) or ("stdout" in mode and stdout):
+      print red("failed")
+      
+      if "stderr" in mode:
+        print red(stderr)
+      if "stdout" in mode:
+        print stdout
+    else:
       print green("passed")
       passed += 1
-    else:
-      print red("failed")
-      print red(stderr)
     
   print
 
@@ -105,8 +110,8 @@ else:
 
 # Compilation tests
 os.system("./compile.py --ANTLR=y")
-run_tests(COMPILE_SCRIPT, tests, "Compilation tests")
+run_tests(COMPILE_SCRIPT, tests, "stderr", "Compilation tests")
 
 # Output tests
-run_tests(OUTPUT_TEST_SCRIPT, tests, "Output tests")
+run_tests(OUTPUT_TEST_SCRIPT, tests, ["stdeerr", "stdout"], "Output tests")
 
