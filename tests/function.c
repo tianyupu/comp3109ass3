@@ -14,7 +14,9 @@ int main(void) {
   
   // test 0
   test0(NUM, a);
-  printf("0: a = %f\n", *a);
+  printf("0: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   return 0;
 }

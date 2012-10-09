@@ -8,7 +8,9 @@ int main(void) {
   // test 0
   setvect(NUM, a, 1);
   test0(NUM, a);
-  printf("0: a = %f\n", *a);
+  printf("0: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   return 0;
 }

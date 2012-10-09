@@ -11,18 +11,27 @@ int main(void) {
   // test 0
   test0(NUM, a);
   setvect(NUM, a, 1);
-  printf("0: a = %f\n", *a);
+  printf("0: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   // test 1
   test1(NUM, a, b);
   setvect(NUM, a, 1);
   setvect(NUM, b, 0);
-  printf("1: a = %f, b = %f \n", *a, *b);
+  printf("1: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
   
   // test 2
   test2(NUM, a);
   setvect(NUM, a, 1);
-  printf("2: a = %f\n", *a);
+  printf("2: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   return 0;
 }

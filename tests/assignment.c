@@ -15,24 +15,41 @@ int main(void) {
 
   // test 0
   test0(NUM, a);
-  printf("0: a = %f\n", *a);
+  printf("0: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   // test 1
   setvect(NUM, a, 1);
   test1(NUM, a, b);
-  printf("1: a = %f, b = %f\n", *a, *b);
+  printf("1: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
   
   // test 2
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
   test2(NUM, a, b);
-  printf("2: a = %f, b = %f\n", *a, *b);
+  printf("2: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
   
   // test 3
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
   test3(NUM, a, b);
-  printf("3: a = %f, b = %f\n", *a, *b);
+  printf("3: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
 
   return 0;
 }

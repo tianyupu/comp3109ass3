@@ -9,11 +9,15 @@ int main(void) {
 
   // test 0
   test0(NUM, a);
-  printf("0: %f\n", *a);
+  printf("0: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   // test 1
   test1(NUM, a);
-  printf("1: %f\n", *a);
+  printf("1: a = ");
+  printvect(NUM, a);
+  printf("\n");
   
   return 0;
 }
