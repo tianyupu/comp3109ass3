@@ -16,7 +16,7 @@ TEST_EXT = '.ans'
 # Compilation script
 COMPILE_SCRIPT = './compile.py %(test)s'+PROG_EXT+' --ANTLR=n'
 # Script for checking output of compiled program
-OUTPUT_TEST_SCRIPT = '%(test)s | diff - %(test)s'+TEST_EXT
+OUTPUT_TEST_SCRIPT = '%(test)s | diff -b - %(test)s'+TEST_EXT
 
 # Set to true to true for all tests
 # Set to false for specified subset
