@@ -29,8 +29,8 @@ class Function():
         var = self.getVar(var.text)
         # Pretends the left most value is the answer
         # TODO calculate the answer
-        expr = expr.children[0]
-        val = self.getVar(expr.text)
+        factor = expr.children[0]
+        val = self.getVar(factor.children[0].text)
         
         # Add the calculations to the function body
         self.body += var.assign(val, self.prog.next_loop)

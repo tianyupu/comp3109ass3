@@ -17,6 +17,7 @@ tokens {
   ASSIGN;
   EXPR;
   MIN;
+  FACTOR;
 }
 
 /*
@@ -78,10 +79,15 @@ expr :
 
 factor :
   | NUM
+  -> ^(FACTOR NUM)
+
   | IDENT
+  -> ^(FACTOR IDENT)
 
   | 'min' '(' e1=expr ','  e2=expr ')'
   -> ^(MIN $e1 $e2)
+
+  | '('! expr ')'!
 ;
 
 // Operations
