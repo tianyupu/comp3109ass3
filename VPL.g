@@ -14,6 +14,9 @@ tokens {
   PARAMS;
   DECLS;
   STATEMENTS;
+  ASSIGN;
+  EXPR;
+  MIN;
 }
 
 /*
@@ -22,7 +25,7 @@ tokens {
 
 // The main program
 program :
-  function* EOF
+  function*
   -> ^(PROGRAM function*)
 ;
 
@@ -46,6 +49,7 @@ list :
 declare :
   'var' list ';'
   -> list
+  
   | // epsilon
 ;
 
@@ -57,21 +61,27 @@ statements :
 
 state  :
     'if' cond 'then' statements 'else' statements 'endif'
+  
   | 'while' cond 'do' statements 'endwhile'
-  | IDENT '=' factor 
+  
+  | var=IDENT '=' expr 
+    -> ^(ASSIGN $var expr)
+  
   | // epsilon
 ;
 
 // Expressions
-factor :
-  left=expr (op right=expr)*
+expr :
+  left=factor (op right=factor )*
+  -> ^(EXPR $left op? $right?)
 ;
 
-expr :
-  | 'min' '(' expr ','  expr ')'
-  | '(' expr ')'
+factor :
   | NUM
   | IDENT
+
+  | 'min' '(' e1=expr ','  e2=expr ')'
+  -> ^(MIN $e1 $e2)
 ;
 
 // Operations

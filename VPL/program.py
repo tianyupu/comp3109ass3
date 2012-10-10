@@ -16,7 +16,7 @@ class Program():
     return self.consts[val]
 
   def addFunc(self, ast_node):
-    func = Function(ast_node)
+    func = Function(ast_node, self)
     if func.name in self.funcs:
       raise Exception('Function %s is already defined' % name)
     else:

@@ -2,9 +2,12 @@ from constant import Constant
 from variable import *
 
 class Function():
-  def __init__(self, ast_node):
-    # Get the function propertie
-    name, params, localvars, body = ast_node.children
+  def __init__(self, ast_node, prog):
+    # Reference to the program
+    self.prog = prog
+
+    # Get the function properties
+    name, params, localvars, statements = ast_node.children
 
     # The name of the function
     self.name = name.text
@@ -14,7 +17,24 @@ class Function():
         for i, p in enumerate(params.children)}
     self.localvars = {v.text: LocalVar(i)
         for i, v in enumerate(localvars.children)}
-    self.body = body
+    self.statements = statements
+
+    # Run statements
+    self.body = ""
+    for statement in self.statements.children:
+      # Assignment
+      if statement.token.text == "ASSIGN":
+        # Get the variable and expression
+        var, expr = statement.children
+        var = self.getVar(var.text)
+        # Pretends the left most value is the answer
+        # TODO calculate the answer
+        expr = expr.children[0]
+        val = self.getVar(expr.text)
+        
+        # Add the calculations to the function body
+        self.body += var.assign(val, self.prog.next_loop)
+        self.prog.next_loop += 1
 
     self.before = """
     .text
@@ -48,15 +68,13 @@ class Function():
     leave # restore frame pointer
     ret # return"""
 
-    # TO DO
-    self.body = """
-    """
-
   def getVar(self, ident):
     if ident in self.params:
       return self.params[ident]
-    elif ident in self.localvars:
+    if ident in self.localvars:
       return self.localvars[ident]
+
+    return self.prog.addConst(float(ident))
 
   def __str__(self):
     return self.before % {'name': self.name, 'num': len(self.localvars)} \
