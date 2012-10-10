@@ -31,10 +31,8 @@ class Variable():
     return s
 
 class LocalVar(Variable):
-  nextvar = 0
-  def __init__(self):
-    self.num = LocalVar.nextvar
-    LocalVar.nextvar += 1
+  def __init__(self, num):
+    self.num = num
 
   def load(self, destreg):
     s = """
@@ -50,10 +48,8 @@ class LocalVar(Variable):
 
 class VecParam(Variable):
   REGISTERS = ['%rsi', '%rdx', '%rcx', '%r8', '%r9']
-  nextreg = 0
-  def __init__(self):
-    self.regno = VecParam.nextreg
-    VecParam.nextreg += 1
+  def __init__(self, num):
+    self.regno = num
     self.register = self.REGISTERS[self.regno]
 
   def load(self, destreg):

@@ -2,13 +2,19 @@ from constant import Constant
 from variable import *
 
 class Function():
-  def __init__(self, name, params, localvars):
-    self.name = name
+  def __init__(self, ast_node):
+    # Get the function propertie
+    name, params, localvars, body = ast_node.children
 
-    # Dictionaries for variables, parameters and constants
-    self.params = params if params else {}
-    self.localvars = localvars if localvars else {}
-    self.consts = {}
+    # The name of the function
+    self.name = name.text
+
+    # Dictionaries for variables, parameters and statements
+    self.params = {p.text: VecParam(i)
+        for i, p in enumerate(params.children)}
+    self.localvars = {v.text: LocalVar(i)
+        for i, v in enumerate(localvars.children)}
+    self.body = body
 
     self.before = """
     .text
@@ -45,6 +51,7 @@ class Function():
     # TO DO
     self.body = """
     """
+
   def getVar(self, ident):
     if ident in self.params:
       return self.params[ident]
@@ -54,5 +61,4 @@ class Function():
   def __str__(self):
     return self.before % {'name': self.name, 'num': len(self.localvars)} \
         + self.body \
-        + '\n'.join(map(str, self.consts.values())) \
         + self.after

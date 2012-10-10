@@ -5,127 +5,73 @@ grammar VPL;
 */
 options {
   language=Python;
+  output=AST;
 }
 
-@init {
-  import VPL
-  self.VPL = VPL
-  self.prog = self.VPL.program.Program()
+tokens {
+  PROGRAM;
+  FUNCTION;
+  PARAMS;
+  DECLS;
+  STATEMENTS;
 }
-
 
 /*
   Non-Terminals
 */
 
 // The main program
-start :
-  main
-;
-
-main :
-  function main
-  | // epsilon
-  {
-    print self.prog
-  }
+program :
+  function* EOF
+  -> ^(PROGRAM function*)
 ;
 
 // Functions
 function : 
-  'func' IDENT param declare
-  {
-    # Reset counters
-    self.VPL.variable.VecParam.nextreg = 0
-    self.VPL.variable.LocalVar.nextvar = 0
-    
-    # Get the parameters and local variables
-    params = $param.params
-    vars = $declare.vars
-    
-    # Create the function object
-    func_name = $IDENT.getText()
-    func = self.prog.addFunc(func_name, params, vars)
-  }
-  statements[func] 'end'
-  {
-    # Output the function code
-    #print func
-  }
+  'func' name=IDENT params localvars=declare body=statements 'end'
+  -> ^(FUNCTION $name ^(PARAMS params) ^(DECLS $localvars?) $body)
 ;
 
 // Parameters
-param returns [params] :
+params :
   '(' list ')'
-  // The parameters are the indentities in the list
-  {
-    # Dictionary mapping identities to parameters
-    $params = {ident:self.VPL.variable.VecParam() for ident in $list.idents}
-  }
+  -> list
 ;
 
-list returns [idents] :
-  { $idents = set() } // Keep a set of the identities in the list
-  id1=IDENT
-  { $idents.add(id1.getText()) } // Add the new identity
-  (
-    ',' id2=IDENT
-    { $idents.add(id2.getText()) } // Add the new identity
-  )*
+list :
+  id1=IDENT (','! id2=IDENT)*
 ;
 
 // Declarations
-declare returns [vars] :
+declare :
   'var' list ';'
-  // The variables are the indentities in the list
-  { 
-    # Dictionary mapping identities to local variables
-    $vars = {var: self.VPL.variable.LocalVar() for var in $list.idents}
-  }
+  -> list
   | // epsilon
 ;
 
 // Statements
-statements [func] :
-  state[func] (';' state[func])*
+statements :
+  state (';' state)*
+  -> ^(STATEMENTS state*)
 ;
 
-state [func] :
-    'if' cond[func] 'then' statements[func] 'else' statements[func] 'endif'
-  | 'while' cond[func] 'do' statements[func] 'endwhile'
-  | IDENT '=' factor[func] 
-  {
-    # Add assignment to the function
-    var = $func.getVar($IDENT.getText())
-    $func.body += var.assign($factor.var, self.prog.next_loop)
-    self.prog.next_loop += 1
-  }
+state  :
+    'if' cond 'then' statements 'else' statements 'endif'
+  | 'while' cond 'do' statements 'endwhile'
+  | IDENT '=' factor 
   | // epsilon
 ;
 
 // Expressions
-factor [func] returns [var]:
-  left=expr[func] (op right=expr[func])*
-  {
-    # Calculate the factor (TODO)
-    $factor.var = left
-  }
+factor :
+  left=expr (op right=expr)*
 ;
 
-expr [func] returns [var] :
-  | 'min' '(' expr[func] ','  expr[func] ')'
-  | '(' expr[func] ')'
+expr :
+  | 'min' '(' expr ','  expr ')'
+  | '(' expr ')'
   | NUM
-  {
-    # Get the constant
-    n = float($NUM.getText())
-    $var = self.prog.addConst(n)
-  }
   | IDENT
-  {
-    # Retrieve the variable from the function
-    $var = func.getVar($IDENT.getText())
-  }
 ;
 
 // Operations
@@ -137,8 +83,8 @@ op :
 ;
 
 // Conditions
-cond [func] :
-  expr[func] '<' NUM
+cond  :
+  expr '<' NUM
 ;
 
 
