@@ -59,28 +59,28 @@ class Function():
     return var
 
   def __str__(self):
-    before = self.before % {'name': self.name, 'num': len(self.localvars)}
+    before = self.before.format(name=self.name, num=len(self.localvars))
     return before + self.body + self.after
 
 FUNC_START_ASM = """
 .text
-.global %(name)s
-.type %(name)s, @function
+.global {name}
+.type {name}, @function
 .p2align 4,,15
 
-%(name)s:
-    pushq %%rbp                       # save current frame pointer on stack
-    movq %%rsp, %%rbp                 # set frame pointer
-    pushq %%rbx                       # save callee-save registers that are used on stack
+{name}:
+    pushq %rbp                         # save current frame pointer on stack
+    movq %rsp, %rbp                    # set frame pointer
+    pushq %rbx                         # save callee-save registers that are used on stack
 
     # Allocating memory for local variables
-    # Allocate %(num)s local variable(s)
-    movq %%rdi, %%rax
-    imulq $4, %%rax, %%rax
-    addq $16, %%rax
-    imulq $%(num)s, %%rax, %%rax
-    subq %%rax, %%rsp
-    andq $-16, %%rsp
+    # Allocate {num} local variable(s)
+    movq %rdi, %rax
+    imulq $4, %rax, %rax
+    addq $16, %rax
+    imulq ${num}, %rax, %rax
+    subq %rax, %rsp
+    andq $-16, %rsp
 """
 
 FUNC_END_ASM = """
