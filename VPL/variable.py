@@ -36,11 +36,11 @@ class LocalVar(Variable):
 
   def load(self, destreg):
     s = """
-    movq %%di, %(destreg)s
+    movq %%rdi, %(destreg)s
     imulq $4, %(destreg)s, %(destreg)s
     addq $16, %(destreg)s
     imulq $%(num)s, %(destreg)s, %(destreg)s
-    subq %%bp, %(destreg)s
+    subq %%rbp, %(destreg)s
     negq %(destreg)s
     andq $-16, %(destreg)s
     """ % {'num': self.num, 'destreg': destreg}

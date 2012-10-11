@@ -1,5 +1,6 @@
 from constant import Constant
 from variable import *
+from expression import Expression
 
 class Function():
   def __init__(self, ast_node, prog):
@@ -15,8 +16,10 @@ class Function():
     # Dictionaries for variables, parameters and statements
     self.params = {p.text: VecParam(i)
         for i, p in enumerate(params.children)}
+    
     self.localvars = {v.text: LocalVar(i)
         for i, v in enumerate(localvars.children)}
+
     self.statements = statements
 
     # Run statements
@@ -27,13 +30,14 @@ class Function():
         # Get the variable and expression
         var, expr = statement.children
         var = self.getVar(var.text)
-        # Pretends the left most value is the answer
-        # TODO calculate the answer
-        factor = expr.children[0]
-        val = self.getVar(factor.children[0].text)
+
+        # Calculate the answer
+        expr = Expression(expr, self)
+        factor = expr.evaluate()
         
         # Add the calculations to the function body
-        self.body += var.assign(val, self.prog.next_loop)
+        self.body += expr.asm
+        self.body += var.assign(factor, self.prog.next_loop)
         self.prog.next_loop += 1
 
     self.before = """
@@ -75,6 +79,13 @@ class Function():
       return self.localvars[ident]
 
     return self.prog.addConst(float(ident))
+
+  def tempVar(self):
+    # Get a number for the variable
+    num = len(self.localvars)
+    # Add new local variable
+    var = self.localvars['temp'+str(num)] = LocalVar(num)
+    return var
 
   def __str__(self):
     return self.before % {'name': self.name, 'num': len(self.localvars)} \
