@@ -14,10 +14,10 @@ class Function():
     self.name = name.text
 
     # Dictionaries for variables, parameters and statements
-    self.params = {p.text: VecParam(i)
+    self.params = {p.text: VecParam(p.text, i)
         for i, p in enumerate(params.children)}
     
-    self.localvars = {v.text: LocalVar(i)
+    self.localvars = {v.text: LocalVar(v.text, i)
         for i, v in enumerate(localvars.children)}
 
     self.statements = statements
@@ -55,7 +55,8 @@ class Function():
     # Get a number for the variable
     num = len(self.localvars)
     # Add new local variable
-    var = self.localvars['temp'+str(num)] = LocalVar(num)
+    name = 'temp'+str(num)
+    var = self.localvars[name] = LocalVar(name, num)
     return var
 
   def __str__(self):
@@ -85,7 +86,7 @@ FUNC_START_ASM = """
 
 FUNC_END_ASM = """
     # Epilog of a function
-    popq %rbx                         # restore reg %rbx
-    leave                             # restore frame pointer
-    ret                               # return
+    popq %rbx                          # restore reg %rbx
+    leave                              # restore frame pointer
+    ret                                # return
 """

@@ -3,10 +3,10 @@ class Constant():
     self.val = val
     self.label = repr(val)
 
-    self.asm = CONST_ASM % {'label': self.label, 'val': self.val}
+    self.asm = CONST_ASM.format(label=self.label, val=self.val)
 
   def load(self, destreg):
-    s = LOAD_ASM % (self.label, destreg)
+    s = LOAD_ASM.format(label=self.label, destreg=destreg)
     return s
 
   def __str__(self):
@@ -15,11 +15,11 @@ class Constant():
 CONST_ASM = """
 .data
 .align 16
-.const%(label)s:
-    .float %(val)r
-    .float %(val)r
-    .float %(val)r
-    .float %(val)r
+.const{label}:
+    .float {val}
+    .float {val}
+    .float {val}
+    .float {val}
 """
 
-LOAD_ASM = "movq $.const%s, %s"
+LOAD_ASM = "movq $.const{label:<10}, {destreg:<10} # load constant into {destreg}"
