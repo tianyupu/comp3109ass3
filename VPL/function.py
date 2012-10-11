@@ -40,37 +40,8 @@ class Function():
         self.body += var.assign(factor, self.prog.next_loop)
         self.prog.next_loop += 1
 
-    self.before = """
-    .text
-    .global %(name)s
-    .type %(name)s, @function
-    .p2align 4,,15
-    
-    %(name)s:
-      # save current frame pointer on stack
-      pushq %%rbp
-      # set frame pointer
-      movq %%rsp, %%rbp
-      # save callee-save registers that are used on stack
-      pushq %%rbx
-
-    # Allocating memory for local variables
-    # Allocate NUM local Variable
-    movq %%rdi, %%rax
-    imulq $4, %%rax, %%rax
-    addq $16, %%rax
-    # NUM is the number of local variables
-    # Needs to be computed by an attribute in the attribute grammar
-    imulq $%(num)s, %%rax, %%rax
-    subq %%rax, %%rsp
-    andq $-16, %%rsp
-    """    
-    
-    self.after = """
-    # epilog of a function
-    popq %rbx # restore reg %rbx
-    leave # restore frame pointer
-    ret # return"""
+    self.before = FUNC_START_ASM
+    self.after = FUNC_END_ASM
 
   def getVar(self, ident):
     if ident in self.params:
@@ -88,6 +59,33 @@ class Function():
     return var
 
   def __str__(self):
-    return self.before % {'name': self.name, 'num': len(self.localvars)} \
-        + self.body \
-        + self.after
+    before = self.before % {'name': self.name, 'num': len(self.localvars)}
+    return before + self.body + self.after
+
+FUNC_START_ASM = """
+.text
+.global %(name)s
+.type %(name)s, @function
+.p2align 4,,15
+
+%(name)s:
+    pushq %%rbp                       # save current frame pointer on stack
+    movq %%rsp, %%rbp                 # set frame pointer
+    pushq %%rbx                       # save callee-save registers that are used on stack
+
+    # Allocating memory for local variables
+    # Allocate %(num)s local variable(s)
+    movq %%rdi, %%rax
+    imulq $4, %%rax, %%rax
+    addq $16, %%rax
+    imulq $%(num)s, %%rax, %%rax
+    subq %%rax, %%rsp
+    andq $-16, %%rsp
+"""
+
+FUNC_END_ASM = """
+    # Epilog of a function
+    popq %rbx                         # restore reg %rbx
+    leave                             # restore frame pointer
+    ret                               # return
+"""
