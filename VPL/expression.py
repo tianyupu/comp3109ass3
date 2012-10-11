@@ -14,7 +14,7 @@ class Expression():
       return factor
 
     # Recursively evaluate expression
-    if self.token == "EXPR" or self.token == "MIN":
+    if self.token in OPS:
       # Unary operation
       if len(self.ast_node.children) == 1:
         # Recurse AST
@@ -28,10 +28,10 @@ class Expression():
 
       # Binary operation
       else:
-        if self.token == "MIN":
-          expr0, expr1 = self.ast_node.children
-        elif self.token == "EXPR":
-          expr0, op, expr1 = self.ast_node.children
+        # Get operation
+        op = self.ast_node.token.text
+        # Get operands
+        expr0, expr1 = self.ast_node.children
 
         # Recurse AST
         expr0 = Expression(expr0, self.func)
@@ -40,14 +40,8 @@ class Expression():
         var0 = expr0.evaluate()
         var1 = expr1.evaluate()
 
-        # Concatenate assembly operations
+        # Concatenate assembly instructions
         self.asm = expr0.asm + expr1.asm
-
-        # Get operation type 
-        if self.token == "MIN":
-          op = "min"
-        elif self.token == "EXPR":
-          op = op.text
 
         # Perform operation between expressions
         val = self.op(op, var0, var1)
@@ -81,7 +75,7 @@ OPS = {
   "-": "subps",
   "*": "mulps",
   "/": "divps",
-  "min": "minps",
+  "MIN": "minps",
 }
 
 OPERATION_ASM = """

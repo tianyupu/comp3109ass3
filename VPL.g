@@ -73,8 +73,8 @@ state  :
 
 // Expressions
 expr :
-  left=factor (op right=factor )*
-  -> ^(EXPR $left op? $right?)
+  left=factor
+  (op^ right=factor)*
 ;
 
 factor :
