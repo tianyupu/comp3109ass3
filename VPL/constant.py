@@ -14,7 +14,7 @@ class Constant():
     """ % {'label': self.label, 'val': self.val}
 
   def load(self, destreg):
-    s = 'movq $.const%s, %s' % (self.label, destreg)
+    s = '\nmovq $.const%s, %s\n' % (self.label, destreg)
     return s
 
   def __str__(self):

@@ -32,7 +32,7 @@ class Variable():
 
 class LocalVar(Variable):
   def __init__(self, num):
-    self.num = num
+    self.num = num+1
 
   def load(self, destreg):
     s = """
@@ -53,5 +53,5 @@ class VecParam(Variable):
     self.register = self.REGISTERS[self.regno]
 
   def load(self, destreg):
-    s = 'movq %(regaddr)s, %(destreg)s' % {'regaddr': self.register, 'destreg': destreg}
+    s = '\nmovq %(regaddr)s, %(destreg)s \n' % {'regaddr': self.register, 'destreg': destreg}
     return s
