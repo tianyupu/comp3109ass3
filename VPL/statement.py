@@ -23,4 +23,7 @@ class Statement(Base):
       func.prog.next_loop += 1
 
   def __str__(self):
+    if not self.asm:
+      return self.header()
+
     return self.asm
