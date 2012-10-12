@@ -72,9 +72,18 @@ state  :
 ;
 
 // Expressions
-expr :
+expr:
+  addsub_expr
+;
+
+addsub_expr :
+  left=muldiv_expr
+  (('+'|'-')^ right=muldiv_expr)*
+;
+
+muldiv_expr :
   left=factor
-  (op^ right=factor)*
+  (('*'|'/')^ right=factor)*
 ;
 
 factor :
