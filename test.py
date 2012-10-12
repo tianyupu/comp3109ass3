@@ -27,6 +27,7 @@ TESTS = [
 	'function',
 	'multiple_functions',
 	'parameters',
+	'tooManyParms',
 	'declarations',
 	'assignment',
 	'numbers',

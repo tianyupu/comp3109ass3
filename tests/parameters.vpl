@@ -1,8 +1,8 @@
-func test0(a)
+func onePar(a)
 end
 
-func test1(a,b)
+func twoPar(a,b)
 end
 
-func test2(a,b,c,d)
+func fivePar(a,b,c,d,e)
 end
