@@ -93,6 +93,11 @@ To compile use `compile.py` and the name of the file. The program will be conver
   * If set to 'n' the ANTLR grammar will not be built. An already existing version will be used.
   * If set to 'y' the ANTLR grammar will be built. Even if no .vpl file is given.
 
+### Process
+ 1. ANTLR builds Lexer and Parser from `VPL.g` using python
+ 2. The assembly (`.vpl.s`) is generated from the VPL program (`.vpl`) file using `vpl2asm.py`
+   * `vpl2asm.py` uses the Lexer and Parser python library generated previously
+ 3. The final executable is built from a C program (`.c`) and a VPL program (`.vpl.s`) using gcc
 
 ## Tests
 To perform the tests simply run `test.py` from the main folder.
