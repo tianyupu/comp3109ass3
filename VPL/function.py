@@ -1,9 +1,11 @@
 from constant import Constant
 from variable import *
 from expression import Expression
+from base import Base
 
-class Function():
+class Function(Base):
   def __init__(self, ast_node, prog):
+    self.ast_node = ast_node
     # Reference to the program
     self.prog = prog
 
@@ -36,7 +38,7 @@ class Function():
         factor = expr.evaluate()
         
         # Add the calculations to the function body
-        self.body += expr.asm
+        self.body += str(expr)
         self.body += var.assign(factor, self.prog.next_loop)
         self.prog.next_loop += 1
 
@@ -61,7 +63,7 @@ class Function():
 
   def __str__(self):
     before = self.before.format(name=self.name, num=len(self.localvars))
-    return before + self.body + self.after
+    return self.header() + before + self.body + self.after
 
 FUNC_START_ASM = """
 .text

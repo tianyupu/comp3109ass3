@@ -1,7 +1,6 @@
-class Variable():
-  def __init__(self):
-    pass
+from base import Base
 
+class Variable():
   def assign(self, src, loopnum):
     s = ASSIGN_ASM.format(
       src = src.load('%rax'), dest = self.load('%r10'), loop = loopnum,

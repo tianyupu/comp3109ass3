@@ -1,4 +1,6 @@
-class Expression():
+from base import Base
+
+class Expression(Base):
   def __init__(self, ast_node, func):
     self.func = func
     self.ast_node = ast_node
@@ -68,7 +70,7 @@ class Expression():
     return val
 
   def __str__(self):
-    return self.asm
+    return self.header() + self.asm
 
 OPS = {
   "+": "addps",
