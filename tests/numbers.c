@@ -1,45 +1,45 @@
 #include "head.h"
 
-extern void test0(long, float *);
-extern void test1(long, float *);
-extern void test2(long, float *);
-extern void test3(long, float *);
-extern void test4(long, float *);
+extern void assignInt(long, float *);
+extern void reassignInt(long, float *);
+extern void assignFloat(long, float *);
+extern void reassignFloat(long, float *);
+extern void tricky(long, float *);
 
 int main(void) {
   float *a = createvect(NUM);
 
-  // test 0
+  // assign an int
   setvect(NUM, a, 1);
-  test0(NUM, a);
+  assignInt(NUM, a);
   printf("0: a = ");
   printvect(NUM, a);
   printf("\n");
   
-  // test 1
+  // assign then reassign an int
   setvect(NUM, a, 1);
-  test1(NUM, a);
+  reassignInt(NUM, a);
   printf("1: a = ");
   printvect(NUM, a);
   printf("\n");
   
-  // test 2
+  // assign a foat
   setvect(NUM, a, 1);
-  test2(NUM, a);
+  assignFloat(NUM, a);
   printf("2: a = ");
   printvect(NUM, a);
   printf("\n");
   
-  // test 3
+  // assign then reassign a float
   setvect(NUM, a, 1);
-  test3(NUM, a);
+  reassignFloat(NUM, a);
   printf("3: a = ");
   printvect(NUM, a);
   printf("\n");
   
-  // test 4
+  // tricky example
   setvect(NUM, a, 1);
-  test4(NUM, a);
+  tricky(NUM, a);
   printf("4: a = ");
   printvect(NUM, a);
   printf("\n");

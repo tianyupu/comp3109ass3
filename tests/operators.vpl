@@ -1,16 +1,17 @@
-func test0(a)
+func numAddition(a)
   a = 1 + 2;
   a = 2.0 + 0;
 end
 
-func test1(a,b)
+func parAddition(a,b)
   a = a + b;
   a = b + a;
 end
 
-func test2(a)
+func allOperators(a,b)
   a = 1 + 2;
   a = 2 - 3;
   a = 3 * 4;
   a = 4 / 5;
+  b = min(a, b);
 end

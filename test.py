@@ -25,10 +25,12 @@ ALL_TESTS = False
 TESTS = [
 	'blank',
 	'function',
+	'errors/no_arg_func',
 	'multiple_functions',
 	'parameters',
-	'tooManyParms',
+	'errors/too_many_parms',
 	'declarations',
+	'errors/wrong_declaration',
 	'assignment',
 	'numbers',
 	'operators',
@@ -114,5 +116,5 @@ os.system("./compile.py --ANTLR=y")
 run_tests(COMPILE_SCRIPT, tests, "stderr", "Compilation tests")
 
 # Output tests
-run_tests(OUTPUT_TEST_SCRIPT, tests, ["stdeerr", "stdout"], "Output tests")
+run_tests(OUTPUT_TEST_SCRIPT, tests, ["stderr", "stdout"], "Output tests")
 

@@ -1,25 +1,25 @@
-func test0(a)
+func assignInt(a)
   a = 0;
 end
 
-func test1(a)
+func reassignInt(a)
   a = 1;
   a = 2;
   a = 12486725;
 end
 
-func test2(a)
+func assignFloat(a)
   a = 0.0;
 end
 
-func test3(a)
+func reassignFloat(a)
   a = 0.1224;
   a = 0.402804;
   a = 1.237859;
   a = 3.14159;
 end
 
-func test4(a)
+func tricky(a)
   a = 1.23456;
   a = 12.3456;
   a = 123.125;

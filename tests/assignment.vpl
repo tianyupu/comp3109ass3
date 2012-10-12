@@ -1,18 +1,25 @@
-func test0(a)
+func basic(a)
   a = 0;
 end
 
-func test1(a,b)
+func twoVar(a,b)
   a = 0;
   b = 1;
 end
 
-func test2(a,b)
-  a = b;
-end
-
-func test3(a,b)
+func tricky(a,b)
   a = b;
   a = 1;
   b = a;
+end
+
+func aToB(a,b)
+  a = b;
+end
+
+func swapVar(a,b)
+  var c;
+  c = b;
+  b = a;
+  a = c;
 end

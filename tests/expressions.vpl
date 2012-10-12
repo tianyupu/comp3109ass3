@@ -1,15 +1,21 @@
-func test0(a)
+func bracket(a)
   a = (a);
 end
 
-func test1(a, b)
+func bracketedOperations(a, b)
   a = (a * a) + (b * b);
   a = (a + b) / 2.0;
-  a = a*a + b + 10;
+  a = (a * a) + b + 10;
 end
 
-func test2(a,b)
+func mins(a,b)
   a = min(a, b);
-  a = min(a+1, b-1);
-  a = min(a,b) + 20;
+  a = min(a + 1, b - 1);
+  a = min(a, b) + 20;
+end
+
+func trickyOrderOperations(a, b)
+  a = a + a * (b + b);
+  a = a + b / 2.0;
+  a = b + a * (b + 10);
 end
