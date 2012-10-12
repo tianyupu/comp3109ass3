@@ -99,14 +99,6 @@ factor :
   | '('! expr ')'!
 ;
 
-// Operations
-op :
-    '+'
-  | '-'
-  | '*'
-  | '/'
-;
-
 // Conditions
 cond  :
   expr '<' NUM
