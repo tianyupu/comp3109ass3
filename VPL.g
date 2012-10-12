@@ -15,6 +15,9 @@ tokens {
   DECLS;
   STATEMENTS;
   ASSIGN;
+  IF;
+  WHILE;
+  COND;
   EXPR;
   MIN;
   FACTOR;
@@ -61,9 +64,11 @@ statements :
 ;
 
 state  :
-    'if' cond 'then' statements 'else' statements 'endif'
+    'if' cond 'then' s1=statements 'else' s2=statements 'endif'
+    -> ^(IF cond $s1 $s2)
   
   | 'while' cond 'do' statements 'endwhile'
+    -> ^(WHILE cond statements)
   
   | var=IDENT '=' expr 
     -> ^(ASSIGN $var expr)
@@ -99,17 +104,10 @@ factor :
   | '('! expr ')'!
 ;
 
-// Operations
-op :
-    '+'
-  | '-'
-  | '*'
-  | '/'
-;
-
 // Conditions
 cond  :
-  expr '<' NUM
+  expr '<' const=NUM
+  -> ^(COND expr ^(FACTOR $const))
 ;
 
 

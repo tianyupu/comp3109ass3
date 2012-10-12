@@ -1,9 +1,11 @@
-from constant import Constant
+from base import Base
 from variable import *
-from expression import Expression
+from constant import Constant
+from statement import Statement
 
-class Function():
+class Function(Base):
   def __init__(self, ast_node, prog):
+    self.ast_node = ast_node
     # Reference to the program
     self.prog = prog
 
@@ -13,32 +15,15 @@ class Function():
     # The name of the function
     self.name = name.text
 
-    # Dictionaries for variables, parameters and statements
+    # Dictionaries for variables and parameters
     self.params = {p.text: VecParam(p.text, i)
         for i, p in enumerate(params.children)}
     
     self.localvars = {v.text: LocalVar(v.text, i)
         for i, v in enumerate(localvars.children)}
 
-    self.statements = statements
-
     # Run statements
-    self.body = ""
-    for statement in self.statements.children:
-      # Assignment
-      if statement.token.text == "ASSIGN":
-        # Get the variable and expression
-        var, expr = statement.children
-        var = self.getVar(var.text)
-
-        # Calculate the answer
-        expr = Expression(expr, self)
-        factor = expr.evaluate()
-        
-        # Add the calculations to the function body
-        self.body += expr.asm
-        self.body += var.assign(factor, self.prog.next_loop)
-        self.prog.next_loop += 1
+    self.statements = [Statement(s, self) for s in statements.children]
 
     self.before = FUNC_START_ASM
     self.after = FUNC_END_ASM
@@ -61,7 +46,8 @@ class Function():
 
   def __str__(self):
     before = self.before.format(name=self.name, num=len(self.localvars))
-    return before + self.body + self.after
+    body = ''.join(map(str, self.statements))
+    return self.header() + before + body + self.after
 
 FUNC_START_ASM = """
 .text
@@ -89,4 +75,8 @@ FUNC_END_ASM = """
     popq %rbx                          # restore reg %rbx
     leave                              # restore frame pointer
     ret                                # return
+
+
+
+
 """

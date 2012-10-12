@@ -1,4 +1,6 @@
-class Expression():
+from base import Base
+
+class Expression(Base):
   def __init__(self, ast_node, func):
     self.func = func
     self.ast_node = ast_node
@@ -41,9 +43,10 @@ class Expression():
         var1 = expr1.evaluate()
 
         # Concatenate assembly instructions
-        self.asm = expr0.asm + expr1.asm
+        self.asm = str(expr0) + str(expr1)
 
         # Perform operation between expressions
+        self.asm += self.header()
         val = self.op(op, var0, var1)
 
         return val
