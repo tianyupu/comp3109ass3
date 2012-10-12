@@ -24,7 +24,7 @@ class Program():
     return func
 
   def __str__(self):
-    string = '\n'.join(map(str, self.funcs.values()))
-    string += '\n'.join(map(str, self.consts.values()))
+    string = ''.join(map(str, self.funcs.values()))
+    string += ''.join(map(str, self.consts.values()))
     return string
 

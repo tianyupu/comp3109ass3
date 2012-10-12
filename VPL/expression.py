@@ -43,9 +43,10 @@ class Expression(Base):
         var1 = expr1.evaluate()
 
         # Concatenate assembly instructions
-        self.asm = expr0.asm + expr1.asm
+        self.asm = str(expr0) + str(expr1)
 
         # Perform operation between expressions
+        self.asm += self.header()
         val = self.op(op, var0, var1)
 
         return val
@@ -70,7 +71,7 @@ class Expression(Base):
     return val
 
   def __str__(self):
-    return self.header() + self.asm
+    return self.asm
 
 OPS = {
   "+": "addps",
