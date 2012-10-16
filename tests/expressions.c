@@ -42,7 +42,7 @@ int main(void) {
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
   trickyOrderOperations(NUM, a, b);
-  printf("2: a = ");
+  printf("3: a = ");
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");
