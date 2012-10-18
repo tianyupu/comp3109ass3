@@ -14,34 +14,16 @@ func redundant(a)
   a = 10;
 end
 
-func compare(a,b)
-  if a < b then
-    a = 5;
-  else
-    a = 0;
-  endif
-end
-
 func nested(a,b)
-  if a < b then
+  if a < 15 then
     a = 5;
-    if a < b then
-      a = 10;
+    if b < 5 then
+      b = 10;
     else
-      a = 7;
+      b = 7;
     endif
   else
     a = 3;
-  endif
-end
-
-func equal(a,b)
-  a = 1;
-  b = 1;
-  if a < b then
-    a = 2;
-  else
-    a = 5
   endif
 end
 
@@ -59,7 +41,7 @@ func twoIf(a,b)
 end
 
 func empty(a,b)
-  if a < b then
+  if a < 2 then
   else
   endif
 end
