@@ -4,6 +4,7 @@ extern void bracket(long, float *);
 extern void bracketedOperations(long, float *, float *);
 extern void mins(long, float *, float *);
 extern void trickyOrderOperations(long, float *, float *);
+extern void nested(long, float *, float *);
 
 int main(void) {
   float *a = createvect(NUM),
@@ -38,11 +39,22 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
-  // ricky order of operations 
+  // tricky order of operations 
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
   trickyOrderOperations(NUM, a, b);
   printf("3: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
+  
+  // nested brackets 
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 3);
+  nested(NUM, a, b);
+  printf("4: a = ");
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");

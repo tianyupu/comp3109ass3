@@ -19,3 +19,10 @@ func trickyOrderOperations(a, b)
   a = a + b / 2.0;
   a = b + a * (b + 10);
 end
+
+func nested(a, b)
+  var c;
+  c = 1;
+  a = (a * (b + 1));
+  b = 2 * ((b - c * (1 + 1)) + 1);
+end
