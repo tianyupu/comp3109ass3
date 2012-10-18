@@ -4,9 +4,9 @@ from condition import Condition
 
 class Statement(Base):
   def __init__(self, ast_node, func):
+    self.func = func
     self.ast_node = ast_node
     self.asm = ""
-    self.func = func
 
     # Assignment
     if ast_node.token.text == "ASSIGN":
