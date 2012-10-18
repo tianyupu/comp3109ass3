@@ -79,7 +79,9 @@ def run_tests(command, tests, mode="stderr", name="Test"):
     stdout = stdout.read()
     
     # Check results
-    if ("stderr" in mode and stderr) or ("stdout" in mode and stdout):
+    if ("stderr" in mode and stderr and "error" not in test) \
+      or ("stderr" in mode and not stderr and "error" in test) \
+      or ("stdout" in mode and stdout):
       print red("failed")
       
       if "stderr" in mode:
