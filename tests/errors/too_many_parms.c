@@ -23,7 +23,7 @@ int main(void) {
   // this is more than the maximum amount of parameters we can have
   // this should break
   sixPar(NUM, a, b, c, d, e, f);
-  printf("2: a = ");
+  printf("0: a = ");
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");

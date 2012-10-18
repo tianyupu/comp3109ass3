@@ -1,4 +1,0 @@
-func endless(a)
-  while a < 20 do
-  endwhile
-end
