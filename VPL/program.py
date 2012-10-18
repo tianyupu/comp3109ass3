@@ -6,6 +6,7 @@ class Program():
     self.consts = {}
     self.funcs = {}
     self.next_loop = 0
+    self.condnums = []
 
     for child in ast_node.children:
       self.addFunc(child)

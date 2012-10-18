@@ -8,15 +8,18 @@ class Condition(Base):
 
     expr = Expression(expr, stmt.func)
     factor = expr.evaluate() # returns a variable with the calculated value
-    num = stmt.func.getVar(num.children[0].text) # returns Constant with the given value from the condition
+    #num = stmt.func.getVar(num.children[0].text) # returns Constant with the given value from the condition
+    num = float(num.children[0].text)
 
     self.asm = COND_ASM.format(
       src = factor.load('%rax'), loop = stmt.func.prog.next_loop,
       inc_src = INC_SRC_ASM if factor.__class__.__name__ is not "Constant" else "",
       true = stmt.true,
       false = stmt.false,
-      num = num.val
+      num = num,
+      numlabel = "" if num in stmt.func.prog.condnums else INC_NUM_ASM.format(number=num)
     )
+    stmt.func.prog.condnums.append(num)
     stmt.func.prog.next_loop += 1
 
   def __str__(self):
@@ -54,9 +57,12 @@ COND_ASM = """
         jmp {false}
 
         .align 4
-
-    .L{num}:
-        .float {num}
+    {numlabel}
 """
 
 INC_SRC_ASM = "addq $16, %rax"
+
+INC_NUM_ASM = """
+    .L{number}:
+        .float {number}
+"""
