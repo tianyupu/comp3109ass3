@@ -1,38 +1,65 @@
-func test0(a,b)
+func basic(a)
   if a < 20 then
-    b = 10;
+    a = 20;
   else
-    b = 20;
   endif
 end
 
-func test1(a,b)
+func redundant(a)
   if a < 20 then
-    if a < 30 then
-      b = 20;
-    else
-      b = 30;
-    endif;
-    b = 10;
+    a = 5;
   else
-    b = 20;
-    if a < 10 then
-      b = 1;
+    a = 1;
+  endif;
+  a = 10;
+end
+
+func compare(a,b)
+  if a < b then
+    a = 5;
+  else
+    a = 0;
+  endif
+end
+
+func nested(a,b)
+  if a < b then
+    a = 5;
+    if a < b then
+      a = 10;
     else
-      b = 2;
+      a = 7;
     endif
+  else
+    a = 3;
   endif
 end
 
-func test2(a,b,c)
-  if a < 20 then
-    b = 10;
+func equal(a,b)
+  a = 1;
+  b = 1;
+  if a < b then
+    a = 2;
   else
-    b = 20;
+    a = 5
+  endif
+end
+
+func twoIf(a,b)
+  if a < 10 then
+    a = 5
+  else
+    a = 10
   endif;
   if b < 20 then
-    a = 10;
+    b = 10
   else
-    a = 20;
+    b = 20
+  endif
+end
+
+func empty(a,b)
+  if a < b then
+  else
   endif
 end
