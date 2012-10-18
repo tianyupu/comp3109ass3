@@ -1,10 +1,10 @@
-func test0(a)
+func basicIncrement(a)
   while a < 20 do
     a = a + 1;
   endwhile
 end
 
-func test1(a,b)
+func nested(a,b)
   while a < 20 do
     a = a + 1;
     while b < 20 do
@@ -13,7 +13,7 @@ func test1(a,b)
   endwhile
 end
 
-func test2(a,b)
+func nested2(a,b)
   while a < 20 do
     while b < 20 do
       b = b + 1;
@@ -22,9 +22,20 @@ func test2(a,b)
   endwhile
 end
 
-func test3(a,b) 
+func relativeChange(a,b) 
   while a < 10 do
     b = a;
     a = a * 2;
+  endwhile
+end
+
+func whileIf(a,b) 
+  while a < 10 do
+    if b < 5 then
+      b = b * b;
+    else
+      b = b - 1;
+    endif;
+  a = a + 1;
   endwhile
 end

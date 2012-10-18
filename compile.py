@@ -10,21 +10,30 @@ if len(sys.argv) < 2:
   print usage
   sys.exit(1)
 else:
-  if '.vpl' in sys.argv[1]:
-    prog = sys.argv[1].rstrip('.vpl')
-    ext = "vpl"
-  elif '.c' in sys.argv[1]:
-    prog = sys.argv[1].rstrip('.c')
-    ext = "c"
-  elif "--ANTLR" in sys.argv[1]:
-    prog = None
-    ext = None
-  else:
-    print usage
-    sys.exit(1)
+  prog, ext = None, None
+  antlr = None
+
+  for arg in sys.argv[1:]:
+    if "--ANTLR" in arg:
+      antlr = arg[-1]
+
+    if not os.path.isfile(arg):
+      continue
+
+    prog, ext = os.path.splitext(arg)
+    if ext == '.vpl':
+      ext = "vpl"
+    elif ext == '.c':
+      ext = "c"
+    else:
+      ext = None
+
+if ext == None and antlr == None:
+  print usage
+  sys.exit(1)
 
 # Build the ANTLR-generated parser using the grammar file
-if '--ANTLR=n' not in sys.argv or "--ANTLR=y" in sys.argv and ext!="c":
+if antlr == "n" or (antlr == "y" and ext!="c"):
   os.system("java -cp antlr-3.1.2.jar org.antlr.Tool -o %s VPL.g" % BUILD_DIR)
   os.system("touch %s" % os.path.join(BUILD_DIR, '__init__.py'))
 
@@ -34,7 +43,7 @@ if prog:
     os.system("./vpl2asm.py < %(prog)s.vpl > %(prog)s.vpl.s" % {'prog': prog})
   
   # Compile options
-  call = "gcc -g -Wall -W -I vector vector/vector.c -o %(prog)s "
+  call = "gcc -g -Wall -W -Ivector -Itests vector/vector.c -o %(prog)s "
 
   # Choose C file
   if os.path.isfile(prog+'.c'):

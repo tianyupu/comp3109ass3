@@ -38,6 +38,7 @@ TESTS = [
 	'if_statements',
 	'while_loops',
 	'other',
+	'errors/endless_loop',
 ]
 
 

@@ -1,18 +1,18 @@
 #include "head.h"
 
-extern void test0(long, float *, float *);
-extern void test1(long, float *, float *);
-extern void test2(long, float *, float *);
-extern void test3(long, float *, float *);
+extern void basicIncrement(long, float *);
+extern void nested(long, float *, float *);
+extern void nested2(long, float *, float *);
+extern void relativeChange(long, float *, float *);
+extern void whileIf(long, float *, float *);
 
 int main(void) {
   float *a = createvect(NUM),
         *b = createvect(NUM);
   
-  // test 0
+  // incrementing up to 20 
   setvect(NUM, a, 1);
-  setvect(NUM, b, 2);
-  test0(NUM, a, b);
+  basicIncrement(NUM, a);
   printf("0: a = ");
   printvect(NUM, a);
   printf("\n");
@@ -20,10 +20,10 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
-  // test 1
+  // nested while loop
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
-  test1(NUM, a, b);
+  nested(NUM, a, b);
   printf("1: a = ");
   printvect(NUM, a);
   printf("\n");
@@ -31,10 +31,10 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
-  // test 2
+  // nested while loop
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
-  test2(NUM, a, b);
+  nested2(NUM, a, b);
   printf("2: a = ");
   printvect(NUM, a);
   printf("\n");
@@ -42,11 +42,22 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
-  // test 3
+  // a and b changing relative to each other
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
-  test3(NUM, a, b);
+  relativeChange(NUM, a, b);
   printf("3: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
+  
+  // while with an if loop inside it
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 3);
+  whileIf(NUM, a, b);
+  printf("4: a = ");
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");
