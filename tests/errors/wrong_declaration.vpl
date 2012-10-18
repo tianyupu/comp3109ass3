@@ -1,0 +1,4 @@
+func test0(a)
+  var x;
+  var y;
+end
