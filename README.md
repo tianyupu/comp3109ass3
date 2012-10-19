@@ -121,3 +121,20 @@ To perform the tests simply run `test.py` from the main folder.
 The `test.py` script will proceed to check that compiler
 correctly identifies the programs in the test folder as syntactically valid.
 If there are any errors in the compiler's output these errors will be output.
+
+## Debugging
+Debugging can be performed with `gdb <path to program>`.
+
+(Note that `gdb` will only work effectively with programs compiled with `gcc` that have the `-g` flag.
+The `compile.py` compiler does this automatically.).
+
+### Running the program
+The command `run` will run the program until the first breakpoint it comes across.
+The program can be resumed after a breakpoint using this command.
+The `step` command will run just one statement (ASM or C) at a time.
+
+### Breakpoints
+Breakpoints can be set at the desired positions with `break <line number>`.
+
+### Printing values
+Use `x/f $<register name>` to print out the floating point value in the register.
