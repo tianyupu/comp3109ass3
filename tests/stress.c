@@ -52,9 +52,9 @@ int main(void) {
   printf("\n");
   
   // stress test 3 
-  stress3(NUM, a, b, c, d, e);
   setvect(NUM, a, 1);
   setvect(NUM, b, 2);
+  stress3(NUM, a, b, c, d, e);
   printf("3: a = ");
   printvect(NUM, a);
   printf("\n");
