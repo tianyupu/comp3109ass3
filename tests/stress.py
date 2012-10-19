@@ -1,5 +1,5 @@
 def stress(a,b):
-  x = 3. * (min(a,b) + 1.)/ 2.;
+  x = 3. * (min(a,b) + 1.);
   if (x*4) < 100:
     a = 10;
     while (a*4) < 10:
