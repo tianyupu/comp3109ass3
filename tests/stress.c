@@ -25,7 +25,7 @@ int main(void) {
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, a);
+  printvect(NUM, b);
   printf("\n");
   
   // stress test 1 into the else of the first if 
@@ -36,7 +36,7 @@ int main(void) {
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, a);
+  printvect(NUM, b);
   printf("\n");
   
   
