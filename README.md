@@ -130,11 +130,11 @@ The `compile.py` compiler does this automatically.).
 
 ### Running the program
 The command `run` will run the program until the first breakpoint it comes across.
-The program can be resumed after a breakpoint using this command.
+The program can be resumed after a breakpoint using `continue`.
 The `step` command will run just one statement (ASM or C) at a time.
 
 ### Breakpoints
-Breakpoints can be set at the desired positions with `break <line number>`.
+Breakpoints can be set at the desired positions with `break [<path to file>:]<line number>`.
 
 ### Printing values
 Use `x/f $<register name>` to print out the floating point value in the register.
