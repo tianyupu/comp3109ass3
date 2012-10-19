@@ -16,9 +16,6 @@ int main(void) {
   printf("0: a = ");
   printvect(NUM, a);
   printf("\n");
-  printf("   b = ");
-  printvect(NUM, b);
-  printf("\n");
   
   // nested while loop
   setvect(NUM, a, 1);

@@ -6,9 +6,10 @@ class Condition(Base):
     self.ast_node = ast_node
     expr, num = ast_node.children
 
-    expr = Expression(expr, stmt.func)
-    factor = expr.evaluate() # returns a variable with the calculated value
+    #expr = Expression(expr, stmt.func)
+    #factor = expr.evaluate() # returns a variable with the calculated value
     #num = stmt.func.getVar(num.children[0].text) # returns Constant with the given value from the condition
+    factor = stmt.func.getVar(expr.children[0].text)
     num = float(num.children[0].text)
 
     self.asm = COND_ASM.format(
@@ -53,16 +54,16 @@ COND_ASM = """
 
         ucomiss .L{num}, %xmm0
         
-        ja {true}
+        jb {true}
         jmp {false}
 
-        .align 4
     {numlabel}
 """
 
 INC_SRC_ASM = "addq $16, %rax"
 
 INC_NUM_ASM = """
+        .align 4
     .L{number}:
         .float {number}
 """

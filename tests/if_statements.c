@@ -36,7 +36,7 @@ int main(void) {
   printf("\n");
   
   // a nested if loop where a should be 3, and b is unchanged 
-  setvect(NUM, a, 1);
+  setvect(NUM, a, 15);
   setvect(NUM, b, 20.5);
   nested(NUM, a, b);
   printf("3: a = ");
