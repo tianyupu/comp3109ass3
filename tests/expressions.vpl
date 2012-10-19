@@ -26,3 +26,11 @@ func nested(a, b)
   a = (a * (b + 1));
   b = 2 * ((b - c * (1 + 1)) + 1);
 end
+
+func moreNested(a,b,c)
+  var d;
+  d = min (min (a,b),c) - 1;
+  b = 5 * (1 + min (a,b) / 2) + 2;
+  a = d + a - c;
+  c = 2 / (2 + 2);
+end

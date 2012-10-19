@@ -5,6 +5,7 @@ extern void nested(long, float *, float *);
 extern void nested2(long, float *, float *);
 extern void relativeChange(long, float *, float *);
 extern void whileIf(long, float *, float *);
+extern void ifWhile(long, float *, float *);
 
 int main(void) {
   float *a = createvect(NUM),
@@ -55,6 +56,28 @@ int main(void) {
   setvect(NUM, b, 3);
   whileIf(NUM, a, b);
   printf("4: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
+
+  // if with a while loop inside it
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 0);
+  ifWhile(NUM, a, b);
+  printf("5: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
+
+  // else in big if else statement 
+  setvect(NUM, a, 1);
+  setvect(NUM, b, 4);
+  ifWhile(NUM, a, b);
+  printf("6: a = ");
   printvect(NUM, a);
   printf("\n");
   printf("   b = ");

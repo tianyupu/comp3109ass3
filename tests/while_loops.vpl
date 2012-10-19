@@ -39,3 +39,20 @@ func whileIf(a,b)
   a = a + 1;
   endwhile
 end
+
+func ifWhile(a,b)
+  if b < 4 then
+    while a < 5 do
+      if 0 < 3 then
+        a = a + 1;
+        b = b * (1 + 2);
+      else
+      endif;
+      b = min(b,20);
+    endwhile;
+    a = 2;
+  else
+    a = 0;
+    b = 0;
+  endif
+end

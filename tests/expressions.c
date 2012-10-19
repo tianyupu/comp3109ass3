@@ -5,10 +5,12 @@ extern void bracketedOperations(long, float *, float *);
 extern void mins(long, float *, float *);
 extern void trickyOrderOperations(long, float *, float *);
 extern void nested(long, float *, float *);
+extern void moreNested(long, float *, float *, float *);
 
 int main(void) {
   float *a = createvect(NUM),
-        *b = createvect(NUM);
+        *b = createvect(NUM),
+        *c = createvect(NUM);
 
   // simple brackets 
   setvect(NUM, a, 1);
@@ -61,5 +63,20 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
+  // nested brackets 
+  setvect(NUM, a, 2);
+  setvect(NUM, b, 3);
+  setvect(NUM, c, 4);
+  moreNested(NUM, a, b, c);
+  printf("5: a = ");
+  printvect(NUM, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(NUM, b);
+  printf("\n");
+  printf("   c = ");
+  printvect(NUM, c);
+  printf("\n");
+
   return 0;
 }

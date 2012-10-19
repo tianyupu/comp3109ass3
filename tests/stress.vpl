@@ -1,0 +1,40 @@
+func stress1(a,b)
+  var x,y;
+  x = 3 * (min(a,b) + 1)/ 2;
+  if x < 100 then
+    a = 10;
+    while a < 10 do
+      b = b + 1;
+      a = a - 1;
+    endwhile
+  else
+    a = x;
+    b = x;
+  endif;
+  a = b * a * b;
+end
+
+func stress2(a,b)
+  if a < 10 then
+    if a < 5 then
+      while a < 10 do
+        a = a + 1;
+      endwhile
+    else
+      a = min (a,b);
+      b = 2;
+    endif;
+    b = b + 1;
+  else
+    b = 100;
+    a = -100;
+  endif
+end
+
+func stress3(a,b,c,d,e)
+  a = min (b, min(c,min(d, min(e, 5 + 2 * (3 + 1)))));
+  b = 1 / 2;
+  c = a * (2 + c) * d;
+  d = d + 5;
+  e = d - 3 * min (2, min (a, 0));
+end
