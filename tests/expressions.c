@@ -63,7 +63,7 @@ int main(void) {
   printvect(NUM, b);
   printf("\n");
   
-  // nested brackets 
+  // more nested brackets 
   setvect(NUM, a, 2);
   setvect(NUM, b, 3);
   setvect(NUM, c, 4);
