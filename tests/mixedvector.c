@@ -2,81 +2,107 @@
 
 extern void whileIf(long, float *, float *);
 extern void ifWhile(long, float *, float *);
-extern void moreNested(long, float *, float *);
+extern void moreNested(long, float *, float *, float *);
 extern void stress1(long, float *, float *);
 
 int main(void) {
-  NUM = 8;
-  float *a = createvect(NUM),
-        *b = createvect(NUM),
-        *c = createvect(NUM);
+  int num = 8;
+  int i = 0;
+  float *a = createvect(num),
+        *b = createvect(num),
+        *c = createvect(num);
   
   // while with an if loop inside it
-  setvect(NUM, a, 0);
-  a[1] = 1;
-  a[2] = 2;
-  a[3] = 3;
-  a[4] = 4;
-  a[5] = 5;
-  setvect(NUM, b, 3);
-  b[0] = 0;
-  b[5] = 10;
-  whileIf(NUM, a, b);
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i;
+    b[i] = i*i;
+  }
+  whileIf(num, a, b);
   printf("0: a = ");
-  printvect(NUM, a);
+  printvect(num, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, b);
+  printvect(num, b);
+  printf("\n");
+ 
+  // such that we go into the while loop
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i-10;
+    b[i] = i-5;
+  }
+  whileIf(num, a, b);
+  printf("1: a = ");
+  printvect(num, a);
   printf("\n");
 
   // if with a while loop inside it
-  setvect(NUM, a, 1);
-  a[1] = 1;
-  a[2] = 2;
-  a[3] = 3;
-  a[4] = 4;
-  a[5] = 5;
-  setvect(NUM, b, 0);
-  b[0] = 0;
-  b[5] = 10;
-  ifWhile(NUM, a, b);
-  printf("1: a = ");
-  printvect(NUM, a);
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i;
+    b[i] = i*i;
+  }
+  ifWhile(num, a, b);
+  printf("2: a = ");
+  printvect(num, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, b);
+  printvect(num, b);
   printf("\n");
 
-  // more nested brackets 
-  setvect(NUM, a, 2);
-  a[1] = 1;
-  a[2] = 2;
-  a[3] = 3;
-  a[4] = 4;
-  a[5] = 5;
-  setvect(NUM, b, 0);
-  setvect(NUM, b, 3);
-  setvect(NUM, c, 4);
-  moreNested(NUM, a, b, c);
-  printf("5: a = ");
-  printvect(NUM, a);
+  // if with a while loop inside it
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i-10;
+    b[i] = i-5;
+  }
+  ifWhile(num, a, b);
+  printf("3: a = ");
+  printvect(num, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, b);
+  printvect(num, b);
+  printf("\n");
+  
+  // more nested brackets 
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  setvect(num, c, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i;
+    b[i] = i*i;
+    c[i] = i*2;
+  }
+  moreNested(num, a, b, c);
+  printf("4: a = ");
+  printvect(num, a);
+  printf("\n");
+  printf("   b = ");
+  printvect(num, b);
   printf("\n");
   printf("   c = ");
-  printvect(NUM, c);
+  printvect(num, c);
   printf("\n");
 
-  // stress test 1 into the first if 
-  setvect(NUM, a, 1);
-  setvect(NUM, b, 2);
-  stress1(32, a, b);
-  printf("0: a = ");
-  printvect(NUM, a);
+  // stress test 1 into the first if
+  num = 32;
+  setvect(num, a, 0);
+  setvect(num, b, 0);
+  for (i = 0; i < num; i ++){
+    a[i] = i;
+    b[i] = i*i;
+  }
+  stress1(num, a, b);
+  printf("5: a = ");
+  printvect(num, a);
   printf("\n");
   printf("   b = ");
-  printvect(NUM, b);
+  printvect(num, b);
   printf("\n");
 
   return 0;

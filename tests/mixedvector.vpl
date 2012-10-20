@@ -49,5 +49,3 @@ func stress1(a,b)
   endif;
   a = b * a * b;
 end
-
-

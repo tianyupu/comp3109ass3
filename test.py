@@ -39,6 +39,7 @@ TESTS = [
 	'while_loops',
 	'other',
 	'stress',
+	'mixedvector',
 ]
 
 
