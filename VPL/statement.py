@@ -21,15 +21,13 @@ class Statement(Base):
       # Add the calculations to the function body
       self.asm += str(expr)
       self.asm += self.header()
-      self.asm += var.assign(factor, func.prog.next_loop)
-      func.prog.next_loop += 1
+      self.asm += var.assign(factor, func.prog.next_loop.next())
 
     if ast_node.token.text == "IF":
       cond, true_body, false_body = ast_node.children
-      idnum = self.func.prog.next_loop
+      idnum = self.func.prog.next_loop.next()
       self.true = ".truebranch%s" % idnum
       self.false = ".falsebranch%s" % idnum
-      self.func.prog.next_loop += 1
       self.asm += IF_ASM.format(
         cond = Condition(cond, self),
         id = idnum,
@@ -39,10 +37,9 @@ class Statement(Base):
 
     if ast_node.token.text == "WHILE":
       cond, body = ast_node.children
-      idnum = self.func.prog.next_loop
+      idnum = self.func.prog.next_loop.next()
       self.true = ".loopbegin%s" % idnum
       self.false = ".loopexit%s" % idnum
-      self.func.prog.next_loop += 1
       self.asm += WHILE_ASM.format(
         id = idnum,
         cond = Condition(cond, self),

@@ -1,11 +1,17 @@
 from constant import Constant
 from function import Function
 
+def counter():
+  i = 0
+  while 1:
+    yield i
+    i += 1
+
 class Program():
   def __init__(self, ast_node):
     self.consts = {}
     self.funcs = {}
-    self.next_loop = 0
+    self.next_loop = counter()
     self.condnums = []
 
     for child in ast_node.children:

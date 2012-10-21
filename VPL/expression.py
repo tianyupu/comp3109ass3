@@ -62,11 +62,10 @@ class Expression(Base):
     self.asm += OPERATION_ASM.format(
       load_left = left.load("%rax"), load_right = right.load("%r10"),
       load_var = val.load("%r11"),
-      operation = op_asm, loop = self.func.prog.next_loop,
+      operation = op_asm, loop = self.func.prog.next_loop.next(),
       inc_left = INC_LEFT_ASM if left.__class__.__name__ is not "Constant" else "",
       inc_right = INC_RIGHT_ASM if right.__class__.__name__ is not "Constant" else "",
     )
-    self.func.prog.next_loop += 1
 
     return val
 
