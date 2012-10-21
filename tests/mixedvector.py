@@ -14,7 +14,7 @@ def whileIf(a,b):
                 b[i] = b[i] * b[i]
         else:
             for i in xrange(len(b)):
-                b[i] = b[i] + 1
+                b[i] = b[i] - 1
         for i in xrange(len(a)):
             a[i] = a[i] + 1
         
@@ -44,7 +44,7 @@ def nested(a,b,c):
 def stress(a,b):
     x = []
     for i in xrange(len(a)):
-        x.append(3*min(a[i],b[i]) +1)
+        x.append(3*(min(a[i],b[i]) +1))
     if sum(x) < 100:
         for i in xrange(len(a)):
             a[i] = 10
@@ -59,38 +59,6 @@ def stress(a,b):
     for i in xrange(len(a)):
         a[i] = b[i]*a[i]*b[i]
 
-def stress2(a,b):
-    x = []
-    x = min(a,b)
-    for i in xrange(len(a)):
-        x[i] = x[i] + 1
-    if sum(x) < 100:
-        for i in xrange(len(a)):
-            a[i] = 10
-        while sum(a) < 10:
-            for i in xrange(len(a)):
-                b[i]=b[i]+1
-                a[i]=a[i]-1
-    else:
-        for i in xrange(len(a)):
-            a[i]=x[i]
-            b[i]=x[i]
-    for i in xrange(len(a)):
-        a[i] = b[i]*a[i]*b[i]
-
-def stress3(a,b):
-    x = min(a,b)
-    for i in xrange(len(a)):
-        x[i] = x[i] + 1
-    if sum(x) < 100:
-        for i in xrange(len(a)):
-            a[i] = 10
-        while sum(a) < 10:
-            for i in xrange(len(a)):
-                b[i]=b[i]+1
-                a[i]=a[i]-1
-    else:
-        a = x
-        b = x
-    for i in xrange(len(a)):
-        a[i] = b[i]*a[i]*b[i]    
+stress(a,b)
+print a
+print b

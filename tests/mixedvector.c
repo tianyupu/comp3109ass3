@@ -38,6 +38,9 @@ int main(void) {
   printf("1: a = ");
   printvect(num, a);
   printf("\n");
+  printf("   b = ");
+  printvect(num, b);
+  printf("\n");
 
   // if with a while loop inside it
   setvect(num, a, 0);
