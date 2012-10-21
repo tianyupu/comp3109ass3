@@ -91,18 +91,21 @@ int main(void) {
 
   // stress test 1 into the first if
   num = 32;
-  setvect(num, a, 0);
-  setvect(num, b, 0);
+  float *d = createvect(num),
+        *e = createvect(num);
+
+  setvect(num, d, 0);
+  setvect(num, e, 0);
   for (i = 0; i < num; i ++){
-    a[i] = i;
-    b[i] = i*i;
+    d[i] = i;
+    e[i] = i*i;
   }
-  stress1(num, a, b);
+  stress1(num, d, e);
   printf("5: a = ");
-  printvect(num, a);
+  printvect(num, d);
   printf("\n");
   printf("   b = ");
-  printvect(num, b);
+  printvect(num, e);
   printf("\n");
 
   return 0;
