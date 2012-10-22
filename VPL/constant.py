@@ -5,7 +5,8 @@ class Constant():
 
     self.asm = CONST_ASM.format(label=self.label, val=self.val)
 
-  def load(self, destreg):
+  def load(self, destreg): 
+    # returns the string for the instruction to load the constant
     s = LOAD_ASM.format(label=self.label, destreg=destreg)
     return s
 

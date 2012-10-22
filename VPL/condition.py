@@ -6,8 +6,8 @@ class Condition(Base):
     self.ast_node = ast_node
     expr, num = ast_node.children
 
-    factor = stmt.func.getVar(expr.children[0].text)
-    num = float(num.children[0].text)
+    factor = stmt.func.getVar(expr.children[0].text) # LHS of the condition, the vector param
+    num = float(num.children[0].text) # RHS of the condition, the constant
 
     self.asm = COND_ASM.format(
       src = factor.load('%rax'), loop = stmt.func.prog.next_loop.next(),
@@ -17,6 +17,7 @@ class Condition(Base):
       num = num,
       numlabel = "" if num in stmt.func.prog.condnums else INC_NUM_ASM.format(number=num)
     )
+    # add the condition number so we don't repeat its label in the ASM
     stmt.func.prog.condnums.append(num)
 
   def __str__(self):
