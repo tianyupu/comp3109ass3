@@ -40,6 +40,17 @@ TESTS = [
 	'other',
 	'stress',
 	'mixedvector',
+	'given/test0_addition',
+	'given/test1_subtraction',
+	'given/test2_multiplication',
+	'given/test3_division',
+	'given/test4_min',
+	'given/test5_locals',
+	'given/test6_complex',
+	'given/test7_multiple',
+	'given/test8_semantics',
+	'given/test9_if',
+	'given/test10_while',
 ]
 
 

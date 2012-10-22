@@ -1,0 +1,8 @@
+func foobar(a, b, c)
+  c = a + b;
+end
+
+func foobaz(a, b, c)
+  c = a + b;
+end
+

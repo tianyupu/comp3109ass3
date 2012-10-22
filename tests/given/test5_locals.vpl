@@ -1,0 +1,7 @@
+func foobar(a, b, c)
+  var x, y;
+  x = a + b;
+  y = 2 * (a + b);
+  c = x + y;
+end
+

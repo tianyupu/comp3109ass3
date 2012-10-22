@@ -1,0 +1,4 @@
+func foobar(a, b, c)
+  c = a * b;
+end
+

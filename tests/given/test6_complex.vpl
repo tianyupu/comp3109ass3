@@ -1,0 +1,11 @@
+func foobar(a, b, c)
+  var x, y, z, q, w, e;
+  x = min( 2*min(a, b) + min(a, b), (4*min(a, b) + 2*min(a, b)) * 5);
+  y = x;
+  z = y;
+  q = z;
+  w = q;
+  e = w;
+  c = e;
+end
+

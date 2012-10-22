@@ -1,0 +1,8 @@
+func foobar(a, b, c)
+  var x;
+  x = 0;
+  while x < 100 do
+     x = x + a;
+  endwhile;
+  c = x;
+end
